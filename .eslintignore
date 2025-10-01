@@ -1,0 +1,14 @@
+# Config files
+tailwind.config.js
+postcss.config.js
+commitlint.config.js
+prettier.config.js
+next.config.mjs
+
+# Build output
+/.next/
+/out/
+/build/
+
+# Public assets
+/public/
