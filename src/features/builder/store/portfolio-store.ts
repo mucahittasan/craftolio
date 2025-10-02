@@ -21,6 +21,14 @@ export type Education = {
   endDate?: Date;
 };
 
+export type Project = {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  imageUrl: string;
+};
+
 type ProfileState = {
   title: string;
   bio: string;
@@ -33,7 +41,8 @@ type ProfileState = {
 type PortfolioState = {
   profile: ProfileState;
   experiences: Experience[];
-  educations: Education[]; // YENİ
+  educations: Education[];
+  projects: Project[]; // YENİ
 };
 
 type Actions = {
@@ -45,13 +54,17 @@ type Actions = {
     experience: Partial<Omit<Experience, 'id'>>,
   ) => void;
   removeExperience: (id: string) => void;
-  // YENİ Education Aksiyonları
+  // Education Aksiyonları
   addEducation: (education: Omit<Education, 'id'>) => void;
   updateEducation: (
     id: string,
     education: Partial<Omit<Education, 'id'>>,
   ) => void;
   removeEducation: (id: string) => void;
+  // YENİ Project Aksiyonları
+  addProject: (project: Omit<Project, 'id'>) => void;
+  updateProject: (id: string, project: Partial<Omit<Project, 'id'>>) => void;
+  removeProject: (id: string) => void;
 };
 
 export const usePortfolioStore = create<PortfolioState & Actions>()(
@@ -66,7 +79,8 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
       github: '',
     },
     experiences: [],
-    educations: [], // YENİ
+    educations: [],
+    projects: [], // YENİ
 
     // Aksiyonlar
     setProfile: (profileUpdate) =>
@@ -95,7 +109,6 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
         state.experiences = state.experiences.filter((exp) => exp.id !== id);
       }),
 
-    // YENİ Education Aksiyonları
     addEducation: (education) =>
       set((state) => {
         state.educations.push({ id: uuidv4(), ...education });
@@ -115,6 +128,28 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
     removeEducation: (id) =>
       set((state) => {
         state.educations = state.educations.filter((edu) => edu.id !== id);
+      }),
+
+    // YENİ Project Aksiyonları
+    addProject: (project) =>
+      set((state) => {
+        state.projects.push({ id: uuidv4(), ...project });
+      }),
+
+    updateProject: (id, projectUpdate) =>
+      set((state) => {
+        const index = state.projects.findIndex((proj) => proj.id === id);
+        if (index !== -1) {
+          state.projects[index] = {
+            ...state.projects[index],
+            ...projectUpdate,
+          };
+        }
+      }),
+
+    removeProject: (id) =>
+      set((state) => {
+        state.projects = state.projects.filter((proj) => proj.id !== id);
       }),
   })),
 );
