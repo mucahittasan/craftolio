@@ -42,6 +42,28 @@ export const config = {
       },
     }),
   ],
+
+  // YENİ ve EN ÖNEMLİ BÖLÜM: CALLBACKS
+  callbacks: {
+    // Bu callback, JWT oluşturulduğunda veya güncellendiğinde çalışır.
+    // Kullanıcının ID'sini token'ın içine ekliyoruz.
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    // Bu callback, session'a erişildiğinde çalışır.
+    // Token'daki ID'yi session.user nesnesine ekliyoruz.
+    session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
+  },
+  // ---
+
   debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'jwt',
