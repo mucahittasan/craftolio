@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Layout } from '@/src/components/layout';
-import '@/src/styles/globals.css';
-import { Header } from '@/src/features/landing/components/header';
-import { Footer } from '@/src/features/landing/components/footer';
+import { Layout } from '@/components/layout';
+import '@/styles/globals.css';
+import { Header } from '@/features/landing/components/header';
+import { Footer } from '@/features/landing/components/footer';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.variable}>
         <Layout>
           <Header />
-          {children}
+          <main className="min-h-[calc(100vh-144px)]">{children}</main>
           <Footer />
         </Layout>
       </body>
