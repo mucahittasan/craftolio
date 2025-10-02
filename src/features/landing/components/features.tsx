@@ -1,4 +1,4 @@
-import { BentoGrid, BentoGridItem } from '@/src/components/ui/bento-grid';
+import { BentoGrid, BentoGridItem } from '@/components/ui/bento-grid';
 import {
   Blocks,
   Gem,
@@ -101,7 +101,7 @@ export function Features() {
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
           Everything You Need to Shine
         </h2>
-        <p className="text-muted-foreground mx-auto mt-4 max-w-2xl md:text-lg">
+        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground md:text-lg">
           Craftolio provides powerful features to make your portfolio stand out
           from the crowd.
         </p>

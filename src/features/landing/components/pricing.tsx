@@ -1,20 +1,20 @@
 'use client';
 
-import { Button } from '@/src/components/ui/button';
-import { Card } from '@/src/components/ui/card';
-import { cn } from '@/src/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 import React, { useState, MouseEvent } from 'react';
-import { MotionDiv } from '@/src/utils/motions/motions';
-import { fadeUpVariant } from '@/src/utils/motions/variants';
-import { BillingToggle } from '@/src/components/ui/billing-toggle';
+import { MotionDiv } from '@/utils/motions/motions';
+import { fadeUpVariant } from '@/utils/motions/variants';
+import { BillingToggle } from '@/components/ui/billing-toggle';
 import {
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
   CardFooter,
-} from '@/src/components/ui/card';
+} from '@/components/ui/card';
 
 const plans = [
   {
@@ -90,7 +90,7 @@ export function Pricing() {
         <h2 className="mb-4 text-3xl font-bold tracking-tighter sm:text-4xl">
           Choose Your Plan
         </h2>
-        <p className="text-muted-foreground mx-auto mb-8 max-w-2xl md:text-lg">
+        <p className="mx-auto mb-8 max-w-2xl text-muted-foreground md:text-lg">
           Start for free and scale up as you grow. We have a plan for everyone.
         </p>
         <div className="mb-24 flex items-center justify-center space-x-4">
@@ -125,11 +125,11 @@ export function Pricing() {
             <Card className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-black/5 bg-white/60 shadow-lg backdrop-blur-md transition-shadow duration-300 ease-in-out hover:shadow-2xl dark:border-white/10 dark:bg-zinc-900/60">
               <SpotlightEffect mousePosition={mousePosition} />
               <CardHeader className="z-10 pt-12">
-                <CardTitle className="text-foreground text-2xl font-bold">
+                <CardTitle className="text-2xl font-bold text-foreground">
                   {plan.title}
                 </CardTitle>
                 <div className="flex items-baseline gap-2 pt-4">
-                  <span className="text-foreground text-5xl font-extrabold tracking-tighter">
+                  <span className="text-5xl font-extrabold tracking-tighter text-foreground">
                     ${isYearly ? plan.yearlyPrice / 12 : plan.monthlyPrice}
                   </span>
                   <span className="text-muted-foreground">/ month</span>
@@ -143,7 +143,7 @@ export function Pricing() {
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <Check className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
-                      <span className="text-muted-foreground text-sm">
+                      <span className="text-sm text-muted-foreground">
                         {feature}
                       </span>
                     </li>
