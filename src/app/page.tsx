@@ -1,4 +1,4 @@
-import { Header } from '@/src/features/landing/components/header';
+import { Features } from '@/src/features/landing/components/features';
 import { Hero } from '@/src/features/landing/components/hero';
 
 export default function HomePage() {
@@ -6,6 +6,7 @@ export default function HomePage() {
     <div>
       <div className="absolute left-[20%] top-[60%] h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tr from-[#9c40ff] to-[#ffaa40] blur-[220px]" />
       <Hero />
+      <Features />
     </div>
   );
 }
