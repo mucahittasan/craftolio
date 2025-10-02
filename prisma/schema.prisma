@@ -20,6 +20,12 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  profile     Profile?
+  experiences Experience[]
+  educations  Education[]
+  projects    Project[]
+  skills      Skill[]
 }
 
 model Account {
@@ -59,4 +65,61 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Profile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title    String? // e.g., "Senior Frontend Engineer"
+  bio      String? @db.Text
+  location String?
+  website  String?
+  linkedin String?
+  github   String?
+}
+
+model Experience {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  jobTitle    String
+  company     String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  description String?   @db.Text
+}
+
+model Education {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  school       String
+  degree       String
+  fieldOfStudy String?
+  startDate    DateTime
+  endDate      DateTime?
+}
+
+model Project {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String  @db.Text
+  url         String?
+  imageUrl    String?
+}
+
+model Skill {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name String // e.g., "React", "Next.js"
 }
