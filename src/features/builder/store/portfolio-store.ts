@@ -29,6 +29,11 @@ export type Project = {
   imageUrl: string;
 };
 
+export type Skill = {
+  id: string;
+  name: string;
+};
+
 type ProfileState = {
   title: string;
   bio: string;
@@ -43,6 +48,7 @@ type PortfolioState = {
   experiences: Experience[];
   educations: Education[];
   projects: Project[]; // YENİ
+  skills: Skill[]; // YENİ
 };
 
 type Actions = {
@@ -65,6 +71,9 @@ type Actions = {
   addProject: (project: Omit<Project, 'id'>) => void;
   updateProject: (id: string, project: Partial<Omit<Project, 'id'>>) => void;
   removeProject: (id: string) => void;
+  // YENİ Skill Aksiyonları
+  addSkill: (skillName: string) => void;
+  removeSkill: (id: string) => void;
 };
 
 export const usePortfolioStore = create<PortfolioState & Actions>()(
@@ -81,6 +90,7 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
     experiences: [],
     educations: [],
     projects: [], // YENİ
+    skills: [], // YENİ
 
     // Aksiyonlar
     setProfile: (profileUpdate) =>
@@ -150,6 +160,23 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
     removeProject: (id) =>
       set((state) => {
         state.projects = state.projects.filter((proj) => proj.id !== id);
+      }),
+
+    addSkill: (skillName) =>
+      set((state) => {
+        if (
+          skillName &&
+          !state.skills.some(
+            (s) => s.name.toLowerCase() === skillName.toLowerCase(),
+          )
+        ) {
+          state.skills.push({ id: uuidv4(), name: skillName });
+        }
+      }),
+
+    removeSkill: (id) =>
+      set((state) => {
+        state.skills = state.skills.filter((skill) => skill.id !== id);
       }),
   })),
 );
