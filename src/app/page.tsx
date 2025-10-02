@@ -1,6 +1,8 @@
 import { Features } from '@/src/features/landing/components/features';
 import { Hero } from '@/src/features/landing/components/hero';
 import { HowItWorks } from '@/src/features/landing/components/how-it-works';
+import { Pricing } from '@/src/features/landing/components/pricing';
+import { Cta } from '@/src/features/landing/components/cta';
 
 export default function HomePage() {
   return (
@@ -9,6 +11,8 @@ export default function HomePage() {
       <Hero />
       <Features />
       <HowItWorks />
+      <Pricing />
+      <Cta />
     </div>
   );
 }
