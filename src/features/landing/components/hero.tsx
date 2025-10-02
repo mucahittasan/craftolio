@@ -1,10 +1,10 @@
 import React from 'react';
-import { cn } from '@/src/lib/utils';
-import { MotionDiv, MotionH1, MotionP } from '@/src/utils/motions/motions';
-import { AnimatedGradientText } from '@/src/components/ui/animated-gradient-text';
-import { fadeUpVariant, headingVariants } from '@/src/utils/motions/variants';
-import { RainbowButton } from '@/src/components/ui/rainbow-button';
-import { SparklesText } from '@/src/components/ui/sparkle';
+import { cn } from '@/lib/utils';
+import { MotionDiv, MotionH1, MotionP } from '@/utils/motions/motions';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { fadeUpVariant, headingVariants } from '@/utils/motions/variants';
+import { RainbowButton } from '@/components/ui/rainbow-button';
+import { SparklesText } from '@/components/ui/sparkle';
 
 export const Hero = () => {
   return (
@@ -28,7 +28,7 @@ export const Hero = () => {
       </MotionDiv>
 
       <MotionH1
-        className="text-foreground mt-6 max-w-[640px] text-center text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
+        className="mt-6 max-w-[640px] text-center text-4xl font-semibold leading-tight text-foreground sm:text-5xl md:text-6xl"
         initial="hidden"
         animate="visible"
       >
@@ -44,7 +44,7 @@ export const Hero = () => {
       </MotionH1>
 
       <MotionP
-        className="text-muted-foreground mx-auto my-6 max-w-xl text-balance text-center text-sm leading-7 sm:text-base sm:leading-9 md:text-lg"
+        className="mx-auto my-6 max-w-xl text-balance text-center text-sm leading-7 text-muted-foreground sm:text-base sm:leading-9 md:text-lg"
         variants={fadeUpVariant}
         custom={1.4}
         initial="hidden"
@@ -67,7 +67,7 @@ export const Hero = () => {
       </MotionDiv>
 
       <MotionP
-        className="text-muted-foreground mx-auto mt-10 text-sm font-medium sm:text-base"
+        className="mx-auto mt-10 text-sm font-medium text-muted-foreground sm:text-base"
         variants={fadeUpVariant}
         custom={2}
         initial="hidden"

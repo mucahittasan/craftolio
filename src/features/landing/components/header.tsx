@@ -1,10 +1,10 @@
 import { Leaf } from 'lucide-react';
-import { Button } from '@/src/components/ui/button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export function Header() {
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full backdrop-blur">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">
           <Leaf className="h-6 w-6" />
@@ -19,7 +19,7 @@ export function Header() {
           </Button>
 
           <Button
-            className="bg-foreground hover:bg-foreground/90 text-background"
+            className="bg-foreground text-background hover:bg-foreground/90"
             asChild
           >
             <Link href="/register">Get Started</Link>

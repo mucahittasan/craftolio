@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/src/lib/utils'; // Projemizdeki doğru yol '@/lib/utils'
+import { cn } from '@/lib/utils'; // Projemizdeki doğru yol '@/lib/utils'
 import React from 'react';
 
 type RainbowButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
