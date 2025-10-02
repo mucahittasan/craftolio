@@ -28,7 +28,7 @@ export const Hero = () => {
       </MotionDiv>
 
       <MotionH1
-        className="text-foreground mt-6 max-w-[630px] text-center text-4xl font-medium leading-tight sm:text-5xl md:text-6xl"
+        className="text-foreground mt-6 max-w-[640px] text-center text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl"
         initial="hidden"
         animate="visible"
       >
