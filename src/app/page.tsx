@@ -1,18 +1,18 @@
-import { Header } from '@/src/features/landing/components/header';
+import { Features } from '@/src/features/landing/components/features';
+import { Hero } from '@/src/features/landing/components/hero';
+import { HowItWorks } from '@/src/features/landing/components/how-it-works';
+import { Pricing } from '@/src/features/landing/components/pricing';
+import { Cta } from '@/src/features/landing/components/cta';
 
 export default function HomePage() {
   return (
     <div>
-      <Header />
-      <section className="container mx-auto flex min-h-[calc(100vh-56px)] flex-col items-center justify-center text-center">
-        <h1 className="text-4xl font-bold tracking-tighter md:text-6xl lg:text-7xl">
-          Build Your Professional Portfolio in Minutes
-        </h1>
-        <p className="text-muted-foreground mt-4 max-w-[700px] text-lg">
-          Craftolio is an AI-powered portfolio builder that helps you create a
-          stunning, professional online presence effortlessly.
-        </p>
-      </section>
+      <div className="absolute left-[20%] top-[60%] h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tr from-[#9c40ff] to-[#ffaa40] blur-[220px]" />
+      <Hero />
+      <Features />
+      <HowItWorks />
+      <Pricing />
+      <Cta />
     </div>
   );
 }
