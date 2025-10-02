@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/src/lib/utils';
+import { cn } from '@/lib/utils';
 import React from 'react';
 
 interface BillingToggleProps {
@@ -11,11 +11,11 @@ interface BillingToggleProps {
 export function BillingToggle({ isYearly, setIsYearly }: BillingToggleProps) {
   return (
     // DEĞİŞİKLİK: Konteynere sabit yükseklik (h-10) verildi.
-    <div className="bg-muted relative mx-auto flex h-10 w-fit items-center rounded-full p-1">
+    <div className="relative mx-auto flex h-10 w-fit items-center rounded-full bg-muted p-1">
       <div
         className={cn(
           // DEĞİŞİKLİK: 'top-1 h-8' yerine 'inset-y-1' kullanılarak mükemmel dikey ortalama sağlandı.
-          'bg-background absolute inset-y-1 w-1/2 rounded-full shadow-sm transition-transform duration-300 ease-in-out',
+          'absolute inset-y-1 w-1/2 rounded-full bg-background shadow-sm transition-transform duration-300 ease-in-out',
           isYearly ? 'translate-x-[95%]' : 'translate-x-0', // Ufak bir pozisyon ayarı
         )}
       />

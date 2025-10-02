@@ -1,32 +1,27 @@
 'use client';
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/src/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserPlus, FileText, Globe } from 'lucide-react';
 import React from 'react';
-import { MotionDiv } from '@/src/utils/motions/motions';
-import { fadeUpVariant } from '@/src/utils/motions/variants';
+import { MotionDiv } from '@/utils/motions/motions';
+import { fadeUpVariant } from '@/utils/motions/variants';
 import Tilt from 'react-parallax-tilt';
 
 const steps = [
   {
-    icon: <UserPlus className="text-primary h-8 w-8" />,
+    icon: <UserPlus className="h-8 w-8 text-primary" />,
     title: 'Sign Up & Provide Info',
     description:
       'Create your account and fill out a simple form with your experience, education, and projects.',
   },
   {
-    icon: <FileText className="text-primary h-8 w-8" />,
+    icon: <FileText className="h-8 w-8 text-primary" />,
     title: 'Choose Your Template',
     description:
       'Select from a variety of professional templates and customize colors and fonts to match your style.',
   },
   {
-    icon: <Globe className="text-primary h-8 w-8" />,
+    icon: <Globe className="h-8 w-8 text-primary" />,
     title: 'Publish & Share',
     description:
       'Publish your portfolio to a unique URL and share it with the world.',
@@ -49,7 +44,7 @@ export function HowItWorks() {
         <h2 className="mb-4 text-3xl font-bold tracking-tighter sm:text-4xl">
           Get Your Professional Site in 3 Easy Steps
         </h2>
-        <p className="text-muted-foreground mx-auto mb-16 max-w-2xl md:text-lg">
+        <p className="mx-auto mb-16 max-w-2xl text-muted-foreground md:text-lg">
           From signing up to going live, the entire process is designed to be
           quick, easy, and intuitive.
         </p>
@@ -72,16 +67,16 @@ export function HowItWorks() {
               glarePosition="all"
               className="h-full w-full rounded-2xl"
             >
-              <Card className="bg-card/60 dark:bg-card/40 group relative h-full overflow-hidden rounded-2xl border text-left shadow-xl shadow-black/[0.04] backdrop-blur-sm transition-all duration-300 dark:shadow-white/[0.02]">
+              <Card className="group relative h-full overflow-hidden rounded-2xl border bg-card/60 text-left shadow-xl shadow-black/[0.04] backdrop-blur-sm transition-all duration-300 dark:bg-card/40 dark:shadow-white/[0.02]">
                 {/* Shine Efekti */}
                 <div className="absolute left-[-100%] top-0 h-full w-1/2 bg-gradient-to-r from-transparent to-white/10 opacity-50 transition-all duration-700 group-hover:left-[150%]" />
 
-                <div className="text-primary/5 pointer-events-none absolute -right-6 -top-8 select-none text-[9rem] font-bold opacity-80">
+                <div className="pointer-events-none absolute -right-6 -top-8 select-none text-[9rem] font-bold text-primary/5 opacity-80">
                   0{index + 1}
                 </div>
 
                 <CardHeader className="relative z-10">
-                  <div className="bg-background mb-4 w-fit rounded-full border p-4 shadow-sm">
+                  <div className="mb-4 w-fit rounded-full border bg-background p-4 shadow-sm">
                     {step.icon}
                   </div>
                   <CardTitle className="text-balance text-xl">
@@ -89,7 +84,7 @@ export function HowItWorks() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="relative z-10">
-                  <p className="text-muted-foreground text-balance text-sm">
+                  <p className="text-balance text-sm text-muted-foreground">
                     {step.description}
                   </p>
                 </CardContent>

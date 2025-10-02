@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@/src/components/ui/button';
-import { MotionDiv } from '@/src/utils/motions/motions';
-import { fadeUpVariant } from '@/src/utils/motions/variants';
+import { Button } from '@/components/ui/button';
+import { MotionDiv } from '@/utils/motions/motions';
+import { fadeUpVariant } from '@/utils/motions/variants';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -21,7 +21,7 @@ export function Cta() {
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
             Ready to Build Your Future?
           </h2>
-          <p className="text-muted-foreground mx-auto mt-4 max-w-xl">
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
             Join thousands of professionals who are showcasing their work and
             growing their careers with Craftolio.
           </p>
@@ -29,7 +29,7 @@ export function Cta() {
             <Button
               size="lg"
               asChild
-              className="bg-foreground text-background hover:bg-foreground/90 group h-12 px-8 text-base font-bold"
+              className="group h-12 bg-foreground px-8 text-base font-bold text-background hover:bg-foreground/90"
             >
               <Link href="/register">
                 Start for Free
