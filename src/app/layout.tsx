@@ -21,7 +21,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.variable}>
         <Layout>
+          <Header />
           <main className="min-h-[calc(100vh-144px)]">{children}</main>
+          <Footer />
         </Layout>
       </body>
     </html>

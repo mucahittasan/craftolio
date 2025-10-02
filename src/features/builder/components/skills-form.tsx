@@ -4,28 +4,47 @@ import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { X, ArrowRight, ArrowLeft } from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, Loader2 } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { savePortfolio } from '@/features/builder/actions/save-portfolio';
 
 export function SkillsForm() {
   const router = useRouter();
-  const { skills, addSkill, removeSkill } = usePortfolioStore();
+  const store = usePortfolioStore();
+  const { skills, addSkill, removeSkill } = store;
+
   const [currentSkill, setCurrentSkill] = useState('');
+  const [isPending, startTransition] = useTransition();
 
   const handleAddSkill = () => {
     if (currentSkill.trim() !== '') {
       addSkill(currentSkill.trim());
-      setCurrentSkill(''); // Input'u temizle
+      setCurrentSkill('');
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Formun submit olmasını engelle
+      e.preventDefault();
       handleAddSkill();
     }
+  };
+
+  const handleFinish = () => {
+    startTransition(async () => {
+      // Zustand store'un o anki tüm state'ini alıyoruz
+      const portfolioState = usePortfolioStore.getState();
+      const result = await savePortfolio(portfolioState);
+      if (result.success) {
+        alert('Portfolio saved successfully!');
+        // TODO: Show a success toast notification
+      } else {
+        alert(`Error: ${result.error}`);
+        // TODO: Show an error toast notification
+      }
+    });
   };
 
   return (
@@ -71,18 +90,22 @@ export function SkillsForm() {
           variant="outline"
           onClick={() => router.push('/dashboard/projects')}
           className="group"
+          disabled={isPending}
         >
           <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
           Back: Projects
         </Button>
-        {/* Şimdilik bu buton bir sonraki adıma yönlendiriyor, yakında veritabanına kaydetme işlevini ekleyeceğiz */}
         <Button
-          type="button"
-          onClick={() => alert('All steps completed!')}
+          onClick={handleFinish}
           className="group bg-green-600 text-white hover:bg-green-700"
+          disabled={isPending}
         >
-          Finish & Save
-          <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+          {isPending ? (
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+          ) : (
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+          )}
+          {isPending ? 'Saving...' : 'Finish & Save'}
         </Button>
       </div>
     </div>
