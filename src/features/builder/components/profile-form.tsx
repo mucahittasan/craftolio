@@ -24,7 +24,8 @@ export function ProfileForm() {
   };
 
   return (
-    <div className="rounded-2xl border border-black/10 bg-white/10 p-8 shadow-xl backdrop-blur-lg dark:border-white/10 dark:bg-black/10">
+    // DEĞİŞİKLİK: Kartı "cam" efektli hale getirdik
+    <div className="rounded-2xl border border-black/10 bg-white/10 p-8 shadow-2xl backdrop-blur-lg dark:border-white/10 dark:bg-black/10">
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
