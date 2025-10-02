@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.variable}>
         <Layout>
           <Header />
-          {children}
+          <main className="min-h-[calc(100vh-144px)]">{children}</main>
           <Footer />
         </Layout>
       </body>
