@@ -5,8 +5,6 @@ import prisma from '@/lib/prisma';
 import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
 import { revalidatePath } from 'next/cache';
 
-// Bu fonksiyon, client-side'dan çağrılacak.
-// Zustand'daki state'in tamamını bir argüman olarak alacak.
 export async function savePortfolio(
   portfolioState: ReturnType<typeof usePortfolioStore.getState>,
 ) {
@@ -17,59 +15,88 @@ export async function savePortfolio(
   }
 
   const userId = session.user.id;
-  const { profile, experiences, educations, projects, skills } = portfolioState;
+  const { profile, experiences, educations, projects, skills, username } =
+    portfolioState;
 
   try {
-    // Prisma Transaction: Bu, veritabanı işlemlerinin "ya hep ya hiç" mantığıyla çalışmasını sağlar.
-    // Eğer işlemlerden biri bile başarısız olursa, tüm işlemler geri alınır. Bu, veri bütünlüğü için kritiktir.
     await prisma.$transaction(async (tx) => {
-      // 1. Mevcut tüm listeleri temizle (güncelleme mantığı için en temiz yol)
       await tx.experience.deleteMany({ where: { userId } });
       await tx.education.deleteMany({ where: { userId } });
       await tx.project.deleteMany({ where: { userId } });
       await tx.skill.deleteMany({ where: { userId } });
 
-      // 2. Profile bilgisini oluştur veya güncelle (upsert)
       await tx.profile.upsert({
         where: { userId },
         update: profile,
         create: { userId, ...profile },
       });
 
-      // 3. Yeni listeleri 'createMany' ile toplu halde ekle
-      // Prisma'nın createMany'i, ID'leri manuel yönettiğimiz için bu senaryoda doğrudan uymayabilir.
-      // Bu yüzden her birini ayrı ayrı oluşturmak daha güvenlidir.
+      // Only save experiences that have actual data
       for (const exp of experiences) {
+        const isTouched =
+          exp.jobTitle?.trim() ||
+          exp.company?.trim() ||
+          exp.description?.trim() ||
+          exp.startDate ||
+          exp.endDate;
+
+        if (!isTouched) continue; // Skip empty forms
+
+        const { id, ...expData } = exp;
         await tx.experience.create({
           data: {
-            ...exp,
+            ...expData,
             userId,
-            startDate: exp.startDate || new Date(),
-            endDate: exp.endDate || new Date(),
+            startDate: expData.startDate || new Date(),
+            endDate: expData.endDate || null,
           },
         });
       }
+
+      // Only save educations that have actual data
       for (const edu of educations) {
+        const isTouched =
+          edu.school?.trim() ||
+          edu.degree?.trim() ||
+          edu.fieldOfStudy?.trim() ||
+          edu.startDate ||
+          edu.endDate;
+
+        if (!isTouched) continue; // Skip empty forms
+
+        const { id, ...eduData } = edu;
         await tx.education.create({
           data: {
-            ...edu,
+            ...eduData,
             userId,
-            startDate: edu.startDate || new Date(),
-            endDate: edu.endDate || new Date(),
+            startDate: eduData.startDate || new Date(),
+            endDate: eduData.endDate || null,
           },
         });
       }
+
+      // Only save projects that have actual data
       for (const proj of projects) {
-        await tx.project.create({ data: { ...proj, userId } });
+        const isTouched =
+          proj.name?.trim() ||
+          proj.description?.trim() ||
+          proj.url?.trim() ||
+          proj.imageUrl?.trim();
+
+        if (!isTouched) continue; // Skip empty forms
+
+        const { id, ...projData } = proj;
+        await tx.project.create({ data: { ...projData, userId } });
       }
       for (const skill of skills) {
         await tx.skill.create({ data: { name: skill.name, userId } });
       }
     });
 
-    // Veri güncellendiği için, bu veriyi gösteren sayfaların cache'ini temizle
     revalidatePath('/dashboard');
-    revalidatePath(`/${session.user.name}`); // Gelecekteki public profil sayfası için
+    if (username) {
+      revalidatePath(`/portfolio/${username}`);
+    }
 
     return { success: 'Portfolio saved successfully!' };
   } catch (error) {
