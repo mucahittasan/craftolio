@@ -63,21 +63,25 @@ const AIPoweredPreview = () => (
 
 const features = [
   {
-    icon: <Palette className="h-6 w-6 text-neutral-500" />,
+    icon: (
+      <Palette className="h-6 w-6 text-neutral-500 dark:text-neutral-400" />
+    ),
     title: 'Easy Customization',
     description: 'Choose themes, colors, and fonts that represent you.',
     header: <CustomizationPreview />,
     className: 'md:col-span-2',
   },
   {
-    icon: <Blocks className="h-6 w-6 text-neutral-500" />,
+    icon: <Blocks className="h-6 w-6 text-neutral-500 dark:text-neutral-400" />,
     title: 'Structured Sections',
     description: 'Easily add and manage your experience, projects, and skills.',
     header: <SectionsPreview />,
     className: 'md:col-span-1',
   },
   {
-    icon: <LayoutTemplate className="h-6 w-6 text-neutral-500" />,
+    icon: (
+      <LayoutTemplate className="h-6 w-6 text-neutral-500 dark:text-neutral-400" />
+    ),
     title: 'Responsive Templates',
     description:
       'Your portfolio looks great on all devices, from desktop to mobile.',
@@ -85,7 +89,7 @@ const features = [
     className: 'md:col-span-1',
   },
   {
-    icon: <Gem className="h-6 w-6 text-neutral-500" />,
+    icon: <Gem className="h-6 w-6 text-neutral-500 dark:text-neutral-400" />,
     title: 'AI-Powered Assistance',
     description:
       'Leverage AI to get suggestions for your descriptions and showcase your skills.',

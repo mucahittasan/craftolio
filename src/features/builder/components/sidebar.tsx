@@ -18,6 +18,8 @@ import type { User as AuthUser } from 'next-auth';
 import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
 import NProgress from 'nprogress';
 import { useTransition } from 'react';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { Logo } from '@/components/logo';
 
 const sidebarNavItems = [
   { title: 'Profile', href: '/dashboard', icon: User },
@@ -63,11 +65,11 @@ export function Sidebar({ user }: { user: AuthUser }) {
 
   return (
     <aside className="flex w-64 flex-col border-r bg-background">
-      <div className="flex h-20 items-center border-b p-4">
-        <Link href="/" className="flex items-center space-x-2">
-          <Leaf className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold">Craftolio</span>
+      <div className="flex h-20 items-center justify-between border-b px-4">
+        <Link href="/">
+          <Logo />
         </Link>
+        <ThemeToggle />
       </div>
       <nav className="flex-1 space-y-2 p-4">
         {sidebarNavItems.map((item) => (
@@ -87,10 +89,10 @@ export function Sidebar({ user }: { user: AuthUser }) {
       </nav>
       <div className="border-t p-4">
         <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted font-bold text-primary">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-[#9c40ff] to-[#ffaa40] font-bold text-white">
             {user.name?.charAt(0).toUpperCase()}
           </div>
-          <div>
+          <div className="flex-1">
             <p className="text-sm font-semibold">{user.name}</p>
             <p className="text-xs text-muted-foreground">{user.email}</p>
           </div>
@@ -98,7 +100,7 @@ export function Sidebar({ user }: { user: AuthUser }) {
         <Button
           onClick={handleLogout}
           variant="ghost"
-          className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
+          className="w-full justify-start gap-3 text-muted-foreground hover:text-red-500"
         >
           <LogOut className="h-5 w-5" />
           Log Out
