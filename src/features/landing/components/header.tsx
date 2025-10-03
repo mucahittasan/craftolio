@@ -3,16 +3,17 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { auth } from '@/auth';
 import { logout } from '@/features/auth/actions/logout';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { Logo } from '@/components/logo';
 
 export async function Header() {
   const session = await auth();
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center space-x-2">
-          <Leaf className="h-6 w-6" />
-          <span className="inline-block text-2xl font-bold">Craftolio</span>
+        <Link href="/">
+          <Logo />
         </Link>
         <nav className="hidden items-center space-x-2 md:flex">
           <Button asChild variant="ghost">
@@ -21,6 +22,7 @@ export async function Header() {
           <Button asChild variant="ghost">
             <Link href="/#pricing">Pricing</Link>
           </Button>
+          <ThemeToggle />
           {session?.user ? (
             <div className="flex items-center gap-2">
               <Button
@@ -29,11 +31,7 @@ export async function Header() {
               >
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
-              <Button
-                className="border border-red-500 hover:bg-white hover:text-red-500"
-                onClick={logout}
-                variant="destructive"
-              >
+              <Button onClick={logout} variant="destructive">
                 <LogOut className="h-4 w-4" />
               </Button>
             </div>

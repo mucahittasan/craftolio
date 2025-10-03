@@ -15,8 +15,8 @@ import { SparklesText } from '@/components/ui/sparkle';
 
 export const Hero = () => {
   return (
-    <section className="relative z-20 flex min-h-[calc(100vh-70px)] flex-col items-center justify-center text-center">
-      <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-black dark:bg-[radial-gradient(#ffffff33_1px,transparent_1px)]"></div>
+    <section className="relative z-20 flex min-h-screen flex-col items-center justify-center text-center">
+      <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff33_1px,transparent_1px)]"></div>
       <MotionDiv
         initial="hidden"
         animate="visible"
