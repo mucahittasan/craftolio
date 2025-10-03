@@ -5,8 +5,8 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 import React, { useState, MouseEvent } from 'react';
-import { MotionDiv } from '@/utils/motions/motions';
-import { fadeUpVariant } from '@/utils/motions/variants';
+import { MotionDiv } from '@/features/shared/utils/motions/motions';
+import { fadeUpVariant } from '@/features/shared/utils/motions/variants';
 import { BillingToggle } from '@/components/ui/billing-toggle';
 import {
   CardHeader,

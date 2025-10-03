@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
+import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -86,7 +87,8 @@ export function ProfileForm() {
             />
           </div>
         </div>
-        <div className="flex justify-end pt-4">
+        <div className="flex justify-between pt-4">
+          <SavePortfolioButton variant="outline" />
           <Button onClick={handleNext} className="group">
             Next Step: Experience
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

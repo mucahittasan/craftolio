@@ -3,8 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserPlus, FileText, Globe } from 'lucide-react';
 import React from 'react';
-import { MotionDiv } from '@/utils/motions/motions';
-import { fadeUpVariant } from '@/utils/motions/variants';
+import { MotionDiv } from '@/features/shared/utils/motions/motions';
+import { fadeUpVariant } from '@/features/shared/utils/motions/variants';
 import Tilt from 'react-parallax-tilt';
 
 const steps = [

@@ -1,8 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { MotionDiv } from '@/utils/motions/motions';
-import { fadeUpVariant } from '@/utils/motions/variants';
+import { MotionDiv } from '@/features/shared/utils/motions/motions';
+import { fadeUpVariant } from '@/features/shared/utils/motions/variants';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
