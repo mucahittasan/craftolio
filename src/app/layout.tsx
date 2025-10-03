@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Layout } from '@/components/layout';
-import '@/styles/globals.css';
-import { Header } from '@/features/landing/components/header';
-import { Footer } from '@/features/landing/components/footer';
+import '@/features/shared/styles/globals.css';
+import '@/features/shared/styles/nprogress.css';
+import { Toaster } from 'sonner';
+import { AppProviders } from '@/features/shared/providers';
+import { NavigationProgress } from '@/features/shared/components/navigation-progress';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Craftolio - AI-Powered Portfolio Builder',
@@ -14,17 +15,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.variable}>
-        <Layout>
-          <Header />
-          <main className="min-h-[calc(100vh-144px)]">{children}</main>
-          <Footer />
-        </Layout>
+      <body className={inter.className}>
+        <AppProviders>
+          <NavigationProgress />
+          {children}
+          <Toaster position="top-center" richColors />
+        </AppProviders>
       </body>
     </html>
   );

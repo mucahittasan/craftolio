@@ -2,31 +2,30 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { v4 as uuidv4 } from 'uuid';
 
-// Tipleri tanımlıyoruz
 export type Experience = {
   id: string;
   jobTitle: string;
   company: string;
-  startDate?: Date;
-  endDate?: Date;
-  description: string;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  description?: string | null;
 };
 
 export type Education = {
   id: string;
   school: string;
   degree: string;
-  fieldOfStudy: string;
-  startDate?: Date;
-  endDate?: Date;
+  fieldOfStudy: string | null;
+  startDate?: Date | null;
+  endDate?: Date | null;
 };
 
 export type Project = {
   id: string;
   name: string;
   description: string;
-  url: string;
-  imageUrl: string;
+  url?: string | null;
+  imageUrl?: string | null;
 };
 
 export type Skill = {
@@ -44,41 +43,39 @@ type ProfileState = {
 };
 
 type PortfolioState = {
+  username: string | null;
   profile: ProfileState;
   experiences: Experience[];
   educations: Education[];
-  projects: Project[]; // YENİ
-  skills: Skill[]; // YENİ
+  projects: Project[];
+  skills: Skill[];
 };
 
 type Actions = {
   setProfile: (profile: Partial<ProfileState>) => void;
-  // Experience Aksiyonları
-  addExperience: (experience: Omit<Experience, 'id'>) => void;
+  addExperience: (experience: Experience) => void;
   updateExperience: (
     id: string,
     experience: Partial<Omit<Experience, 'id'>>,
   ) => void;
   removeExperience: (id: string) => void;
-  // Education Aksiyonları
-  addEducation: (education: Omit<Education, 'id'>) => void;
+  addEducation: (education: Education) => void;
   updateEducation: (
     id: string,
     education: Partial<Omit<Education, 'id'>>,
   ) => void;
   removeEducation: (id: string) => void;
-  // YENİ Project Aksiyonları
-  addProject: (project: Omit<Project, 'id'>) => void;
+  addProject: (project: Project) => void;
   updateProject: (id: string, project: Partial<Omit<Project, 'id'>>) => void;
   removeProject: (id: string) => void;
-  // YENİ Skill Aksiyonları
   addSkill: (skillName: string) => void;
   removeSkill: (id: string) => void;
+  hydrateStore: (data: PortfolioState) => void;
 };
 
 export const usePortfolioStore = create<PortfolioState & Actions>()(
   immer((set) => ({
-    // Başlangıç Değerleri
+    username: null,
     profile: {
       title: '',
       bio: '',
@@ -89,10 +86,9 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
     },
     experiences: [],
     educations: [],
-    projects: [], // YENİ
-    skills: [], // YENİ
+    projects: [],
+    skills: [],
 
-    // Aksiyonlar
     setProfile: (profileUpdate) =>
       set((state) => {
         state.profile = { ...state.profile, ...profileUpdate };
@@ -100,7 +96,7 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
 
     addExperience: (experience) =>
       set((state) => {
-        state.experiences.push({ id: uuidv4(), ...experience });
+        state.experiences.push(experience);
       }),
 
     updateExperience: (id, experienceUpdate) =>
@@ -121,7 +117,7 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
 
     addEducation: (education) =>
       set((state) => {
-        state.educations.push({ id: uuidv4(), ...education });
+        state.educations.push(education);
       }),
 
     updateEducation: (id, educationUpdate) =>
@@ -140,10 +136,9 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
         state.educations = state.educations.filter((edu) => edu.id !== id);
       }),
 
-    // YENİ Project Aksiyonları
     addProject: (project) =>
       set((state) => {
-        state.projects.push({ id: uuidv4(), ...project });
+        state.projects.push(project);
       }),
 
     updateProject: (id, projectUpdate) =>
@@ -177,6 +172,16 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
     removeSkill: (id) =>
       set((state) => {
         state.skills = state.skills.filter((skill) => skill.id !== id);
+      }),
+
+    hydrateStore: (data) =>
+      set((state) => {
+        state.username = data.username;
+        state.profile = data.profile;
+        state.experiences = data.experiences;
+        state.educations = data.educations;
+        state.projects = data.projects;
+        state.skills = data.skills;
       }),
   })),
 );
