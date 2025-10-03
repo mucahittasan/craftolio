@@ -7,9 +7,17 @@ import {
   usePortfolioStore,
   Experience,
 } from '@/features/builder/store/portfolio-store';
+import { experienceFormSchema } from '@/features/builder/schemas';
+import { CALENDAR_CONFIG } from '@/features/builder/constants';
+import {
+  useFormTriggerRegistry,
+  useFormValidation,
+} from '@/features/shared/hooks';
+import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Popover,
   PopoverContent,
@@ -26,23 +34,8 @@ import {
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-
-// Tek bir deneyim için Zod şeması
-const experienceSchema = z.object({
-  id: z.string(),
-  jobTitle: z.string().min(2, 'Job title is required.'),
-  company: z.string().min(2, 'Company name is required.'),
-  startDate: z.date({ error: 'Start date is required.' }),
-  endDate: z.date().optional(),
-  description: z.string().optional(),
-});
-
-// Formun tamamı için Zod şeması (deneyimler dizisi)
-const formSchema = z.object({
-  experiences: z.array(experienceSchema),
-});
 
 export function ExperienceForm() {
   const router = useRouter();
@@ -53,17 +46,40 @@ export function ExperienceForm() {
     removeExperience,
   } = usePortfolioStore();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof experienceFormSchema>>({
+    resolver: zodResolver(experienceFormSchema),
+    mode: 'onBlur',
     defaultValues: {
       experiences: experiencesFromStore,
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     control: form.control,
     name: 'experiences',
   });
+
+  const isInitialized = useRef(false);
+
+  useEffect(() => {
+    if (!isInitialized.current) {
+      isInitialized.current = true;
+      if (experiencesFromStore.length === 0) {
+        const id = crypto.randomUUID();
+        const newExp = {
+          id,
+          jobTitle: '',
+          company: '',
+          startDate: undefined,
+          description: '',
+        };
+        addExperience(newExp);
+        append(newExp);
+      } else {
+        replace(experiencesFromStore);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const subscription = form.watch((value, { name, type }) => {
@@ -79,19 +95,23 @@ export function ExperienceForm() {
   }, [form.watch, updateExperience]);
 
   const handleAddNew = () => {
-    const newExperience = {
-      id: crypto.randomUUID(),
+    const id = crypto.randomUUID();
+    const newExp = {
+      id,
       jobTitle: '',
       company: '',
-      startDate: new Date(),
+      startDate: undefined,
       description: '',
     };
-    append(newExperience);
-    addExperience(newExperience);
+    addExperience(newExp);
+    append(newExp);
   };
 
+  useFormTriggerRegistry('__experienceFormTrigger', form.trigger);
+  useFormValidation(form.trigger);
+
   return (
-    <form>
+    <form id="experience-form">
       <div className="space-y-8">
         {fields.map((field, index) => (
           <div
@@ -102,25 +122,46 @@ export function ExperienceForm() {
               {/* Job Title */}
               <div className="space-y-2">
                 <Label>Job Title</Label>
-                <Input {...form.register(`experiences.${index}.jobTitle`)} />
-                <p className="text-sm font-medium text-destructive">
-                  {
-                    form.formState.errors.experiences?.[index]?.jobTitle
-                      ?.message
-                  }
-                </p>
+                <Input
+                  {...form.register(`experiences.${index}.jobTitle`)}
+                  className={cn(
+                    form.formState.errors.experiences?.[index]?.jobTitle &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
+                />
+                {form.formState.errors.experiences?.[index]?.jobTitle && (
+                  <p className="text-sm font-medium text-destructive">
+                    {
+                      form.formState.errors.experiences?.[index]?.jobTitle
+                        ?.message
+                    }
+                  </p>
+                )}
               </div>
               {/* Company */}
               <div className="space-y-2">
                 <Label>Company</Label>
-                <Input {...form.register(`experiences.${index}.company`)} />
-                <p className="text-sm font-medium text-destructive">
-                  {form.formState.errors.experiences?.[index]?.company?.message}
-                </p>
+                <Input
+                  {...form.register(`experiences.${index}.company`)}
+                  className={cn(
+                    form.formState.errors.experiences?.[index]?.company &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
+                />
+                {form.formState.errors.experiences?.[index]?.company && (
+                  <p className="text-sm font-medium text-destructive">
+                    {
+                      form.formState.errors.experiences?.[index]?.company
+                        ?.message
+                    }
+                  </p>
+                )}
               </div>
               {/* Start Date */}
               <div className="space-y-2">
-                <Label>Start Date</Label>
+                <div className="flex min-h-[28px] items-center justify-between">
+                  <Label>Start Date</Label>
+                </div>
                 <Controller
                   control={form.control}
                   name={`experiences.${index}.startDate`}
@@ -132,6 +173,9 @@ export function ExperienceForm() {
                           className={cn(
                             'w-full justify-start text-left font-normal',
                             !field.value && 'text-muted-foreground',
+                            form.formState.errors.experiences?.[index]
+                              ?.startDate &&
+                              'border-destructive focus-visible:ring-destructive',
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
@@ -145,23 +189,55 @@ export function ExperienceForm() {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={field.value}
+                          captionLayout={CALENDAR_CONFIG.CAPTION_LAYOUT}
+                          selected={field.value ?? undefined}
                           onSelect={field.onChange}
                         />
                       </PopoverContent>
                     </Popover>
                   )}
                 />
-                <p className="text-sm font-medium text-destructive">
-                  {
-                    form.formState.errors.experiences?.[index]?.startDate
-                      ?.message
-                  }
-                </p>
+                {form.formState.errors.experiences?.[index]?.startDate && (
+                  <p className="text-sm font-medium text-destructive">
+                    {
+                      form.formState.errors.experiences?.[index]?.startDate
+                        ?.message
+                    }
+                  </p>
+                )}
               </div>
               {/* End Date */}
               <div className="space-y-2">
-                <Label>End Date (Optional)</Label>
+                <div className="flex min-h-[28px] items-center justify-between">
+                  <Label>End Date (Optional)</Label>
+                  <div className="flex items-center space-x-2">
+                    <Controller
+                      control={form.control}
+                      name={`experiences.${index}.endDate`}
+                      render={({ field }) => (
+                        <>
+                          <Checkbox
+                            id={`present-${index}`}
+                            checked={field.value === null}
+                            onCheckedChange={(checked: boolean) => {
+                              if (checked) {
+                                field.onChange(null);
+                              } else {
+                                field.onChange(undefined);
+                              }
+                            }}
+                          />
+                          <label
+                            htmlFor={`present-${index}`}
+                            className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Present
+                          </label>
+                        </>
+                      )}
+                    />
+                  </div>
+                </div>
                 <Controller
                   control={form.control}
                   name={`experiences.${index}.endDate`}
@@ -170,13 +246,16 @@ export function ExperienceForm() {
                       <PopoverTrigger asChild>
                         <Button
                           variant={'outline'}
+                          disabled={field.value === null}
                           className={cn(
                             'w-full justify-start text-left font-normal',
                             !field.value && 'text-muted-foreground',
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {field.value ? (
+                          {field.value === null ? (
+                            <span>Present</span>
+                          ) : field.value ? (
                             format(field.value, 'PPP')
                           ) : (
                             <span>Pick a date</span>
@@ -186,7 +265,8 @@ export function ExperienceForm() {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={field.value}
+                          captionLayout={CALENDAR_CONFIG.CAPTION_LAYOUT}
+                          selected={field.value ?? undefined}
                           onSelect={field.onChange}
                         />
                       </PopoverContent>
@@ -209,8 +289,9 @@ export function ExperienceForm() {
               size="icon"
               className="absolute right-4 top-4"
               onClick={() => {
-                remove(index); // Form'dan kaldır
-                removeExperience(field.id); // Zustand'dan kaldır
+                const experienceId = form.getValues(`experiences.${index}.id`);
+                remove(index);
+                removeExperience(experienceId);
               }}
             >
               <Trash2 className="h-4 w-4" />
@@ -224,15 +305,18 @@ export function ExperienceForm() {
       </div>
 
       <div className="flex justify-between pt-8">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.push('/dashboard')}
-          className="group"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
-          Back: Profile
-        </Button>
+        <div className="flex gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push('/dashboard')}
+            className="group"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
+            Back: Profile
+          </Button>
+          <SavePortfolioButton variant="secondary" />
+        </div>
         <Button
           type="button"
           onClick={() => router.push('/dashboard/education')}

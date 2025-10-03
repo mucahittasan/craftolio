@@ -4,33 +4,20 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
+import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircle, Trash2, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-
-// Tek bir proje için Zod şeması
-const projectSchema = z.object({
-  id: z.string(),
-  name: z.string().min(2, 'Project name is required.'),
-  description: z
-    .string()
-    .min(10, 'Description must be at least 10 characters.'),
-  url: z.string().url('Please enter a valid URL.').optional().or(z.literal('')),
-  imageUrl: z
-    .string()
-    .url('Please enter a valid image URL.')
-    .optional()
-    .or(z.literal('')),
-});
-
-// Formun tamamı için Zod şeması
-const formSchema = z.object({
-  projects: z.array(projectSchema),
-});
+import { cn } from '@/lib/utils';
+import { projectFormSchema } from '@/features/builder/schemas';
+import {
+  useFormValidation,
+  useFormTriggerRegistry,
+} from '@/features/shared/hooks';
 
 export function ProjectForm() {
   const router = useRouter();
@@ -41,19 +28,41 @@ export function ProjectForm() {
     removeProject,
   } = usePortfolioStore();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof projectFormSchema>>({
+    resolver: zodResolver(projectFormSchema),
+    mode: 'onBlur',
     defaultValues: {
       projects: projectsFromStore,
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     control: form.control,
     name: 'projects',
   });
 
-  // react-hook-form'daki değişiklikleri Zustand store'a senkronize et
+  const isInitialized = useRef(false);
+
+  useEffect(() => {
+    if (!isInitialized.current) {
+      isInitialized.current = true;
+      if (projectsFromStore.length === 0) {
+        const id = crypto.randomUUID();
+        const newProj = {
+          id,
+          name: '',
+          description: '',
+          url: '',
+          imageUrl: '',
+        };
+        addProject(newProj);
+        append(newProj);
+      } else {
+        replace(projectsFromStore);
+      }
+    }
+  }, []);
+
   useEffect(() => {
     const subscription = form.watch((value, { name, type }) => {
       if (type === 'change' && value.projects) {
@@ -68,19 +77,23 @@ export function ProjectForm() {
   }, [form.watch, updateProject]);
 
   const handleAddNew = () => {
-    const newProject = {
-      id: crypto.randomUUID(),
+    const id = crypto.randomUUID();
+    const newProj = {
+      id,
       name: '',
       description: '',
       url: '',
       imageUrl: '',
     };
-    append(newProject);
-    addProject(newProject);
+    addProject(newProj);
+    append(newProj);
   };
 
+  useFormTriggerRegistry('__projectFormTrigger', form.trigger);
+  useFormValidation(form.trigger);
+
   return (
-    <form>
+    <form id="project-form">
       <div className="space-y-8">
         {fields.map((field, index) => (
           <div
@@ -91,40 +104,70 @@ export function ProjectForm() {
               {/* Project Name */}
               <div className="space-y-2 md:col-span-2">
                 <Label>Project Name</Label>
-                <Input {...form.register(`projects.${index}.name`)} />
-                <p className="text-sm font-medium text-destructive">
-                  {form.formState.errors.projects?.[index]?.name?.message}
-                </p>
+                <Input
+                  {...form.register(`projects.${index}.name`)}
+                  className={cn(
+                    form.formState.errors.projects?.[index]?.name &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
+                />
+                {form.formState.errors.projects?.[index]?.name && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.projects?.[index]?.name?.message}
+                  </p>
+                )}
               </div>
               {/* Description */}
               <div className="space-y-2 md:col-span-2">
                 <Label>Description</Label>
                 <Textarea
                   {...form.register(`projects.${index}.description`)}
-                  className="min-h-[100px]"
+                  className={cn(
+                    'min-h-[100px]',
+                    form.formState.errors.projects?.[index]?.description &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
                 />
-                <p className="text-sm font-medium text-destructive">
-                  {
-                    form.formState.errors.projects?.[index]?.description
-                      ?.message
-                  }
-                </p>
+                {form.formState.errors.projects?.[index]?.description && (
+                  <p className="text-sm font-medium text-destructive">
+                    {
+                      form.formState.errors.projects?.[index]?.description
+                        ?.message
+                    }
+                  </p>
+                )}
               </div>
               {/* URL */}
               <div className="space-y-2">
                 <Label>Project URL (Optional)</Label>
-                <Input {...form.register(`projects.${index}.url`)} />
-                <p className="text-sm font-medium text-destructive">
-                  {form.formState.errors.projects?.[index]?.url?.message}
-                </p>
+                <Input
+                  {...form.register(`projects.${index}.url`)}
+                  className={cn(
+                    form.formState.errors.projects?.[index]?.url &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
+                />
+                {form.formState.errors.projects?.[index]?.url && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.projects?.[index]?.url?.message}
+                  </p>
+                )}
               </div>
               {/* Image URL */}
               <div className="space-y-2">
                 <Label>Image URL (Optional)</Label>
-                <Input {...form.register(`projects.${index}.imageUrl`)} />
-                <p className="text-sm font-medium text-destructive">
-                  {form.formState.errors.projects?.[index]?.imageUrl?.message}
-                </p>
+                <Input
+                  {...form.register(`projects.${index}.imageUrl`)}
+                  className={cn(
+                    form.formState.errors.projects?.[index]?.imageUrl &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
+                />
+                {form.formState.errors.projects?.[index]?.imageUrl && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.projects?.[index]?.imageUrl?.message}
+                  </p>
+                )}
               </div>
             </div>
             <Button
@@ -133,8 +176,9 @@ export function ProjectForm() {
               size="icon"
               className="absolute right-4 top-4"
               onClick={() => {
+                const projectId = form.getValues(`projects.${index}.id`);
                 remove(index);
-                removeProject(field.id);
+                removeProject(projectId);
               }}
             >
               <Trash2 className="h-4 w-4" />
@@ -148,15 +192,18 @@ export function ProjectForm() {
       </div>
 
       <div className="flex justify-between pt-8">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.push('/dashboard/education')}
-          className="group"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
-          Back: Education
-        </Button>
+        <div className="flex gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push('/dashboard/education')}
+            className="group"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
+            Back: Education
+          </Button>
+          <SavePortfolioButton variant="secondary" />
+        </div>
         <Button
           type="button"
           onClick={() => router.push('/dashboard/skills')}

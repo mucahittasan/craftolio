@@ -1,14 +1,22 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { MotionDiv, MotionH1, MotionP } from '@/utils/motions/motions';
+import {
+  MotionDiv,
+  MotionH1,
+  MotionP,
+} from '@/features/shared/utils/motions/motions';
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
-import { fadeUpVariant, headingVariants } from '@/utils/motions/variants';
+import {
+  fadeUpVariant,
+  headingVariants,
+} from '@/features/shared/utils/motions/variants';
 import { RainbowButton } from '@/components/ui/rainbow-button';
 import { SparklesText } from '@/components/ui/sparkle';
 
 export const Hero = () => {
   return (
     <section className="relative z-20 flex min-h-[calc(100vh-70px)] flex-col items-center justify-center text-center">
+      <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-black dark:bg-[radial-gradient(#ffffff33_1px,transparent_1px)]"></div>
       <MotionDiv
         initial="hidden"
         animate="visible"
