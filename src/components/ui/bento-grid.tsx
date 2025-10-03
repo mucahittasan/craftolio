@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
 
-// Ana ızgara konteyneri
 export const BentoGrid = ({
   className,
   children,
@@ -21,7 +20,6 @@ export const BentoGrid = ({
   );
 };
 
-// Her bir kart (ızgara elemanı)
 export const BentoGridItem = ({
   className,
   title,
@@ -38,7 +36,7 @@ export const BentoGridItem = ({
   return (
     <div
       className={cn(
-        'group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-transparent bg-white p-4 shadow-input transition duration-200 hover:shadow-xl dark:border-white/[0.2] dark:bg-black dark:shadow-none',
+        'group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-black/5 bg-white p-4 shadow-input transition duration-200 hover:shadow-xl dark:border-white/[0.1] dark:bg-black dark:shadow-[0_8px_30px_rgba(139,92,246,0.15)] dark:hover:shadow-[0_12px_40px_rgba(139,92,246,0.3)]',
         className,
       )}
     >
