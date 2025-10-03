@@ -15,6 +15,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
+import { useTheme } from 'next-themes';
 
 const plans = [
   {
@@ -49,13 +50,15 @@ const plans = [
 
 const SpotlightEffect = ({
   mousePosition,
+  isDark = false,
 }: {
   mousePosition: { x: number; y: number };
+  isDark?: boolean;
 }) => (
   <MotionDiv
     className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
     style={{
-      background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,0,0,0.08), transparent 40%)`,
+      background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)'}, transparent 40%)`,
     }}
     aria-hidden="true"
   />
@@ -64,6 +67,7 @@ const SpotlightEffect = ({
 export function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const { theme } = useTheme();
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -122,8 +126,18 @@ export function Pricing() {
               </div>
             )}
 
-            <Card className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-black/5 bg-white/60 shadow-lg backdrop-blur-md transition-shadow duration-300 ease-in-out hover:shadow-2xl dark:border-white/10 dark:bg-zinc-900/60">
-              <SpotlightEffect mousePosition={mousePosition} />
+            <Card
+              className={cn(
+                'relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white/60 shadow-lg backdrop-blur-md transition-all duration-300 ease-in-out dark:bg-zinc-900/60',
+                plan.isFeatured
+                  ? 'border-purple-200 shadow-[0_0_40px_rgba(168,85,247,0.4)] dark:border-purple-500/30 dark:shadow-[0_0_50px_rgba(168,85,247,0.6)]'
+                  : 'border-black/5 dark:border-white/10 dark:shadow-none',
+              )}
+            >
+              <SpotlightEffect
+                mousePosition={mousePosition}
+                isDark={theme === 'dark'}
+              />
               <CardHeader className="z-10 pt-12">
                 <CardTitle className="text-2xl font-bold text-foreground">
                   {plan.title}
