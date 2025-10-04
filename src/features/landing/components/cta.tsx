@@ -1,8 +1,9 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { MotionDiv } from '@/features/shared/utils/motions/motions';
-import { fadeUpVariant } from '@/features/shared/utils/motions/variants';
+import { Button } from '@/features/shared/components/ui/button';
+import { RainbowButton } from '@/features/shared/components/ui/rainbow-button';
+import { MotionDiv } from '@/features/shared/utils/motions/motions.util';
+import { fadeUpVariant } from '@/features/shared/utils/motions/variants.util';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -15,7 +16,7 @@ export function Cta() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
         variants={fadeUpVariant}
-        className="relative overflow-hidden p-12 text-center"
+        className="relative overflow-hidden text-center md:p-12"
       >
         <div className="relative z-10">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
@@ -30,12 +31,13 @@ export function Cta() {
               size="lg"
               asChild
               className="group h-12 bg-foreground px-8 text-base font-bold text-background hover:bg-foreground/90"
-            >
-              <Link href="/register">
+            ></Button>
+            <RainbowButton className="text-sm transition duration-200 hover:scale-[1.02] sm:text-base">
+              ✨{' '}
+              <Link href="/register" className="ml-2">
                 Start for Free
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-            </Button>
+            </RainbowButton>
           </div>
         </div>
       </MotionDiv>

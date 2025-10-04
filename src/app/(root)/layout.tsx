@@ -1,4 +1,4 @@
-import { Layout } from '@/components/layout';
+import { Layout } from '@/features/shared/components/layout';
 import { Header } from '@/features/landing/components/header';
 import { Footer } from '@/features/landing/components/footer';
 

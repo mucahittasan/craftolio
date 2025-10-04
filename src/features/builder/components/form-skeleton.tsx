@@ -1,4 +1,4 @@
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '@/features/shared/components/ui/skeleton';
 
 export function FormSkeleton() {
   return (

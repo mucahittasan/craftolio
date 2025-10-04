@@ -1,7 +1,7 @@
 'use client';
 
+import { useNavigationProgress } from '@/features/shared/hooks/use-navigation-progress.hook';
 import NProgress from 'nprogress';
-import { useNavigationProgress } from '@/features/shared/hooks';
 
 NProgress.configure({
   showSpinner: false,

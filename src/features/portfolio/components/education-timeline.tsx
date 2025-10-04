@@ -1,4 +1,4 @@
-import { Education } from '@/features/builder/store/portfolio-store';
+import { Education } from '@/features/builder/store/portfolio.store';
 import { format } from 'date-fns';
 
 export function EducationTimeline({ educations }: { educations: Education[] }) {

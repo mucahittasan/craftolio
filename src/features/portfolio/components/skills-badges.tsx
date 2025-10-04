@@ -1,5 +1,5 @@
-import { Skill } from '@/features/builder/store/portfolio-store';
-import { Badge } from '@/components/ui/badge';
+import { Skill } from '@/features/builder/store/portfolio.store';
+import { Badge } from '@/features/shared/components/ui/badge';
 
 export function SkillsBadges({ skills }: { skills: Skill[] }) {
   return (
