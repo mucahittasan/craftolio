@@ -1,7 +1,7 @@
 'use client';
 
-import { usePortfolioData } from '@/features/builder/hooks/use-portfolio-data';
-import { FormSkeleton } from './form-skeleton';
+import { usePortfolioData } from '@/features/builder/hooks/use-portfolio-data.hook';
+import { FormSkeleton } from '@/features/builder/components/form-skeleton';
 import { memo } from 'react';
 
 /**

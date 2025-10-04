@@ -1,19 +1,21 @@
-import { Leaf, ArrowRightFromLine, LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
+import { Button } from '@/features/shared/components/ui/button';
 import Link from 'next/link';
 import { auth } from '@/auth';
-import { logout } from '@/features/auth/actions/logout';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { Logo } from '@/components/logo';
+import { logout } from '@/features/auth/actions/logout.action';
+import { ThemeToggle } from '@/features/shared/components/ui/theme-toggle';
+import { Logo } from '@/features/shared/components/logo';
+import { MobileNav } from '@/features/shared/components/mobile/mobile-nav';
+import { ViewPortfolioButton } from '@/features/shared/components/view-portfolio-button';
 
 export async function Header() {
   const session = await auth();
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="glass-panel fixed top-0 z-50 w-full">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/">
-          <Logo />
+          <Logo size={40} />
         </Link>
         <nav className="hidden items-center space-x-2 md:flex">
           <Button asChild variant="ghost">
@@ -25,13 +27,20 @@ export async function Header() {
           <ThemeToggle />
           {session?.user ? (
             <div className="flex items-center gap-2">
+              <ViewPortfolioButton
+                userName={session.user.name}
+                userUsername={session.user.username}
+                userEmail={session.user.email}
+                size="sm"
+                className="h-9"
+              />
               <Button
                 className="bg-foreground text-background hover:bg-foreground/90"
                 asChild
               >
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
-              <Button onClick={logout} variant="destructive">
+              <Button onClick={logout} variant="destructive" size="icon">
                 <LogOut className="h-4 w-4" />
               </Button>
             </div>
@@ -44,6 +53,7 @@ export async function Header() {
             </Button>
           )}
         </nav>
+        <MobileNav session={session} />
       </div>
     </header>
   );

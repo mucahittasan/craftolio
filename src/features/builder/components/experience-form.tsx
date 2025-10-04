@@ -6,24 +6,19 @@ import * as z from 'zod';
 import {
   usePortfolioStore,
   Experience,
-} from '@/features/builder/store/portfolio-store';
-import { experienceFormSchema } from '@/features/builder/schemas';
-import { CALENDAR_CONFIG } from '@/features/builder/constants';
-import {
-  useFormTriggerRegistry,
-  useFormValidation,
-} from '@/features/shared/hooks';
+} from '@/features/builder/store/portfolio.store';
+
 import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/features/shared/components/ui/button';
+import { Input } from '@/features/shared/components/ui/input';
+import { Textarea } from '@/features/shared/components/ui/textarea';
+import { Checkbox } from '@/features/shared/components/ui/checkbox';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
+} from '@/features/shared/components/ui/popover';
+import { Calendar } from '@/features/shared/components/ui/calendar';
 import {
   CalendarIcon,
   PlusCircle,
@@ -33,9 +28,13 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/features/shared/components/ui/label';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { experienceFormSchema } from '@/features/builder/schemas/experience.schema';
+import { useFormTriggerRegistry } from '@/features/shared/hooks/use-form-trigger-registry.hook';
+import { useFormValidation } from '@/features/shared/hooks/use-form-validation.hook';
+import { CALENDAR_CONFIG } from '@/features/builder/constants/calendar.constant';
 
 export function ExperienceForm() {
   const router = useRouter();
@@ -304,23 +303,26 @@ export function ExperienceForm() {
         </Button>
       </div>
 
-      <div className="flex justify-between pt-8">
-        <div className="flex gap-3">
+      <div className="flex flex-col gap-3 pt-8 sm:flex-row sm:justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Button
             type="button"
             variant="outline"
             onClick={() => router.push('/dashboard')}
-            className="group"
+            className="group w-full sm:w-auto"
           >
             <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
             Back: Profile
           </Button>
-          <SavePortfolioButton variant="secondary" />
+          <SavePortfolioButton
+            variant="secondary"
+            className="w-full sm:w-auto"
+          />
         </div>
         <Button
           type="button"
           onClick={() => router.push('/dashboard/education')}
-          className="group"
+          className="group w-full sm:w-auto"
         >
           Next Step: Education
           <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

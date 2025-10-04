@@ -1,4 +1,4 @@
-import { Experience } from '@/features/builder/store/portfolio-store';
+import { Experience } from '@/features/builder/store/portfolio.store';
 import { format } from 'date-fns';
 
 export function ExperienceTimeline({

@@ -1,12 +1,12 @@
 'use client';
 
-import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
+import { usePortfolioStore } from '@/features/builder/store/portfolio.store';
 import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/features/shared/components/ui/button';
+import { Input } from '@/features/shared/components/ui/input';
+import { Badge } from '@/features/shared/components/ui/badge';
 import { X, ArrowLeft } from 'lucide-react';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/features/shared/components/ui/label';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -67,19 +67,17 @@ export function SkillsForm() {
         </div>
       </div>
 
-      <div className="flex justify-between pt-8">
-        <div className="flex gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => router.push('/dashboard/projects')}
-            className="group"
-          >
-            <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
-            Back: Projects
-          </Button>
-          <SavePortfolioButton className="bg-green-600 hover:bg-green-700" />
-        </div>
+      <div className="flex flex-col gap-3 pt-8 sm:flex-row sm:justify-start">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.push('/dashboard/projects')}
+          className="group w-full sm:w-auto"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
+          Back: Projects
+        </Button>
+        <SavePortfolioButton className="w-full bg-green-600 hover:bg-green-700 sm:w-auto" />
       </div>
     </div>
   );

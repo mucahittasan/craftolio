@@ -22,9 +22,10 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(user);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('REGISTRATION_ERROR', error);
-    if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
+    const e = error as { code?: string; meta?: { target?: string[] } };
+    if (e?.code === 'P2002' && e?.meta?.target?.includes('email')) {
       return new NextResponse('Email already exists', { status: 409 });
     }
     return new NextResponse('Internal Error', { status: 500 });
