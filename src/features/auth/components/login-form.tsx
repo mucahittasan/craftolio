@@ -1,13 +1,13 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { useFormStatus } from 'react-dom';
+import { Input } from '@/features/shared/components/ui/input';
+import { Button } from '@/features/shared/components/ui/button';
 import Link from 'next/link';
-import { Label } from '@/components/ui/label';
-import { login, LoginState } from '@/features/auth/actions/login';
+import { Label } from '@/features/shared/components/ui/label';
+import { login, LoginState } from '@/features/auth/actions/login.action';
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useActionState } from 'react';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -25,7 +25,7 @@ function SubmitButton() {
 
 export function LoginForm() {
   const initialState: LoginState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(login, initialState);
+  const [state, dispatch] = useActionState(login, initialState);
   const [showPassword, setShowPassword] = useState(false);
 
   return (

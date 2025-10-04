@@ -54,6 +54,17 @@
 
   * {
     border-color: hsl(var(--border));
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+  }
+  *:not(
+    [class*='motion'],
+    [class*='animate'],
+    [class*='transition'],
+    [class*='duration']
+  ) {
+    transition-property: background-color, border-color, color, fill, stroke;
   }
 
   body {
@@ -63,21 +74,10 @@
       background-color 0.3s ease,
       color 0.3s ease;
   }
+  .glass-panel {
+    @apply border-b border-border/40 bg-background/80 shadow-lg shadow-black/[0.03] backdrop-blur-md backdrop-saturate-150 supports-[backdrop-filter]:bg-background/60 dark:shadow-white/[0.02];
 
-  /* Smooth transitions for theme changes */
-  * {
-    transition-property: background-color, border-color, color, fill, stroke;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-  }
-
-  /* Don't animate transform and opacity changes */
-  *:not(
-    [class*='motion'],
-    [class*='animate'],
-    [class*='transition'],
-    [class*='duration']
-  ) {
-    transition-property: background-color, border-color, color, fill, stroke;
+    /* For iOS Safari quirks */
+    -webkit-backdrop-filter: blur(12px) saturate(1.5);
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
+import { usePortfolioStore } from '@/features/builder/store/portfolio.store';
 
 /**
  * This component handles clearing the Zustand store on logout
