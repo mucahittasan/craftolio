@@ -1,4 +1,4 @@
-import { Project } from '@/features/builder/store/portfolio-store';
+import { Project } from '@/features/builder/store/portfolio.store';
 import {
   Card,
   CardContent,
@@ -6,9 +6,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/features/shared/components/ui/card';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/features/shared/components/ui/button';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 

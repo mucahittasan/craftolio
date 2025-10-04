@@ -5,6 +5,7 @@ import '@/features/shared/styles/nprogress.css';
 import { Toaster } from 'sonner';
 import { AppProviders } from '@/features/shared/providers';
 import { NavigationProgress } from '@/features/shared/components/navigation-progress';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AppProviders>
-          <NavigationProgress />
+          <Suspense fallback={null}>
+            <NavigationProgress />
+          </Suspense>
           {children}
           <Toaster position="top-center" richColors />
         </AppProviders>

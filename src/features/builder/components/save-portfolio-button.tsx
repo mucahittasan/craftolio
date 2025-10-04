@@ -1,16 +1,16 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/features/shared/components/ui/button';
 import { Save, Loader2, AlertCircle } from 'lucide-react';
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { savePortfolio } from '@/features/builder/actions/save-portfolio';
-import { loadPortfolio } from '@/features/builder/actions/load-portfolio';
-import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
+import { savePortfolio } from '@/features/builder/actions/save-portfolio.action';
+import { loadPortfolio } from '@/features/builder/actions/load-portfolio.action';
+import { usePortfolioStore } from '@/features/builder/store/portfolio.store';
 import {
   validatePortfolio,
   getSectionRoute,
-} from '@/features/builder/utils/validate-portfolio';
+} from '@/features/builder/utils/validate-portfolio.util';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 

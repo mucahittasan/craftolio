@@ -1,4 +1,4 @@
-import { getUserPortfolio } from '@/features/portfolio/actions/get-user-portfolio';
+import { getUserPortfolio } from '@/features/portfolio/actions/get-user-portfolio.action';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { PortfolioHeader } from '@/features/portfolio/components/portfolio-header';
@@ -10,7 +10,7 @@ import { SkillsBadges } from '@/features/portfolio/components/skills-badges';
 import { Globe, Github, Linkedin, Edit } from 'lucide-react';
 import { auth } from '@/auth';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/features/shared/components/ui/button';
 
 type Props = {
   params: Promise<{

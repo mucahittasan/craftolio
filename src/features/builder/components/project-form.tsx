@@ -3,21 +3,19 @@
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { usePortfolioStore } from '@/features/builder/store/portfolio-store';
+import { usePortfolioStore } from '@/features/builder/store/portfolio.store';
 import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/features/shared/components/ui/button';
+import { Input } from '@/features/shared/components/ui/input';
+import { Textarea } from '@/features/shared/components/ui/textarea';
 import { PlusCircle, Trash2, ArrowRight, ArrowLeft } from 'lucide-react';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/features/shared/components/ui/label';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { projectFormSchema } from '@/features/builder/schemas';
-import {
-  useFormValidation,
-  useFormTriggerRegistry,
-} from '@/features/shared/hooks';
+import { projectFormSchema } from '@/features/builder/schemas/project.schema';
+import { useFormTriggerRegistry } from '@/features/shared/hooks/use-form-trigger-registry.hook';
+import { useFormValidation } from '@/features/shared/hooks/use-form-validation.hook';
 
 export function ProjectForm() {
   const router = useRouter();
@@ -191,23 +189,26 @@ export function ProjectForm() {
         </Button>
       </div>
 
-      <div className="flex justify-between pt-8">
-        <div className="flex gap-3">
+      <div className="flex flex-col gap-3 pt-8 sm:flex-row sm:justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Button
             type="button"
             variant="outline"
             onClick={() => router.push('/dashboard/education')}
-            className="group"
+            className="group w-full sm:w-auto"
           >
             <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
             Back: Education
           </Button>
-          <SavePortfolioButton variant="secondary" />
+          <SavePortfolioButton
+            variant="secondary"
+            className="w-full sm:w-auto"
+          />
         </div>
         <Button
           type="button"
           onClick={() => router.push('/dashboard/skills')}
-          className="group"
+          className="group w-full sm:w-auto"
         >
           Next Step: Skills
           <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
