@@ -18,10 +18,10 @@ import {
 import { MotionSection } from '@/features/shared/utils/motions/motions.util';
 
 const previewComponents = [
-  <CustomizationPreview />,
-  <SectionsPreview />,
-  <ResponsivePreview />,
-  <AIPoweredPreview />,
+  <CustomizationPreview key="customization" />,
+  <SectionsPreview key="sections" />,
+  <ResponsivePreview key="responsive" />,
+  <AIPoweredPreview key="ai-powered" />,
 ];
 
 export function Features() {
