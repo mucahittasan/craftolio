@@ -1,7 +1,6 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { notFound } from 'next/navigation';
 
 export async function getUserPortfolio(username: string) {
   try {
@@ -30,7 +29,8 @@ export async function getUserPortfolio(username: string) {
       return null;
     }
 
-    const { hashedPassword, ...portfolioData } = user;
+    // Omit sensitive field before returning
+    const { hashedPassword: _omit, ...portfolioData } = user;
     return portfolioData;
   } catch (error) {
     console.error('Failed to fetch portfolio data:', error);

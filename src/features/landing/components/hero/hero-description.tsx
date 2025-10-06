@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  MotionDiv,
-  MotionP,
-} from '@/features/shared/utils/motions/motions.util';
+import { MotionP } from '@/features/shared/utils/motions/motions.util';
 import { fadeUpVariant } from '@/features/shared/utils/motions/variants.util';
 
 interface HeroDescriptionProps {

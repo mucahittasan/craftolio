@@ -3,10 +3,7 @@ import {
   MotionDiv,
   MotionH1,
 } from '@/features/shared/utils/motions/motions.util';
-import {
-  fadeUpVariant,
-  headingVariants,
-} from '@/features/shared/utils/motions/variants.util';
+import { headingVariants } from '@/features/shared/utils/motions/variants.util';
 import { SparklesText } from '@/features/shared/components/ui/sparkle';
 
 interface HeroTitleProps {
