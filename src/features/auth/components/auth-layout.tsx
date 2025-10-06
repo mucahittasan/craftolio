@@ -1,5 +1,3 @@
-import { Leaf } from 'lucide-react';
-import Link from 'next/link';
 import React from 'react';
 import { MotionDiv } from '@/features/shared/utils/motions/motions.util';
 

@@ -1,24 +1,29 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { auth } from '@/auth';
+import { getToken } from 'next-auth/jwt';
 
-export default async function middleware(request: NextRequest) {
-  const session = await auth();
-  const { pathname } = request.nextUrl;
+export default async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-  // If user is authenticated and trying to access login/register pages, redirect to dashboard
-  if (session && (pathname === '/login' || pathname === '/register')) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET!,
+    salt: process.env.AUTH_SALT!,
+  });
+
+  const isAuth = !!token;
+
+  if (isAuth && (pathname === '/login' || pathname === '/register')) {
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
-  // If user is not authenticated and trying to access protected routes, redirect to login
-  if (!session && pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  if (!isAuth && pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/login', '/register', '/dashboard/:path*'],
+  matcher: ['/dashboard/:path*', '/login', '/register'],
 };
