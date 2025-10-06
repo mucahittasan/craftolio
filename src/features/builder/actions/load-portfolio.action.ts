@@ -60,6 +60,7 @@ export async function loadPortfolio() {
         id: exp.id,
         jobTitle: exp.jobTitle,
         company: exp.company,
+        location: exp.location,
         startDate: exp.startDate,
         endDate: exp.endDate,
         description: exp.description,
@@ -69,6 +70,7 @@ export async function loadPortfolio() {
         school: edu.school,
         degree: edu.degree,
         fieldOfStudy: edu.fieldOfStudy,
+        location: edu.location,
         startDate: edu.startDate,
         endDate: edu.endDate,
       })),
@@ -77,6 +79,7 @@ export async function loadPortfolio() {
         name: proj.name,
         description: proj.description,
         url: proj.url,
+        githubUrl: proj.githubUrl,
         imageUrl: proj.imageUrl,
       })),
       skills: user.skills.map((skill) => ({

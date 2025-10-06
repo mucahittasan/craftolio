@@ -5,6 +5,7 @@ export const experienceSchema = z
     id: z.string(),
     jobTitle: z.string(),
     company: z.string(),
+    location: z.string().nullish(),
     startDate: z.date().nullish(),
     endDate: z.date().nullish(),
     description: z.string().nullish(),
