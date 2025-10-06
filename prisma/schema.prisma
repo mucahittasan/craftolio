@@ -74,7 +74,7 @@ model Profile {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  title    String? // e.g., "Senior Frontend Engineer"
+  title    String?
   bio      String? @db.Text
   location String?
   website  String?
@@ -103,6 +103,7 @@ model Education {
   school       String
   degree       String
   fieldOfStudy String?
+  location     String?
   startDate    DateTime
   endDate      DateTime?
 }
@@ -115,6 +116,7 @@ model Project {
   name        String
   description String  @db.Text
   url         String?
+  githubUrl   String?
   imageUrl    String?
 }
 
