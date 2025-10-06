@@ -16,10 +16,21 @@ import { fadeUpVariant } from '@/features/shared/utils/motions/variants.util';
 import { SpotlightEffect } from '@/features/landing/components/pricing/spotlight-effect';
 import { useMousePosition } from '@/features/landing/hooks/use-mouse-position.hook';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 import {
   PricingPlan,
   PRICING_SECTION_CONFIG,
 } from '@/features/landing/constants/pricing.constant';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from '@/features/shared/components/ui/dialog';
 
 interface PricingCardProps {
   plan: PricingPlan;
@@ -34,6 +45,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
 }) => {
   const { mousePosition, handleMouseMove } = useMousePosition();
   const { theme } = useTheme();
+  const router = useRouter();
 
   return (
     <MotionDiv
@@ -145,21 +157,46 @@ export const PricingCard: React.FC<PricingCardProps> = ({
         </CardContent>
 
         <CardFooter className="z-10">
-          <Button
-            className={cn(
-              'group/button relative w-full overflow-hidden',
-              plan.isFeatured
-                ? 'bg-foreground text-background hover:bg-foreground/90'
-                : '',
-            )}
-            size="lg"
-            variant={plan.isFeatured ? 'default' : 'outline'}
-          >
-            <span className="absolute h-0 w-0 rounded-full bg-white opacity-10 transition-all duration-300 ease-out group-hover/button:h-32 group-hover/button:w-32"></span>
-            <span className="relative">
-              {plan.isFeatured ? 'Get Pro' : 'Get Started'}
-            </span>
-          </Button>
+          {plan.isFeatured ? (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  className={cn(
+                    'group/button relative w-full overflow-hidden',
+                    'bg-foreground text-background hover:bg-foreground/90',
+                  )}
+                  size="lg"
+                  variant="default"
+                >
+                  <span className="absolute h-0 w-0 rounded-full bg-white opacity-10 transition-all duration-300 ease-out group-hover/button:h-32 group-hover/button:w-32"></span>
+                  <span className="relative">Get Pro</span>
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Coming soon</DialogTitle>
+                  <DialogDescription>
+                    Pro features are in the works. Stay tuned!
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Close</Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          ) : (
+            <Button
+              className={cn('group/button relative w-full overflow-hidden')}
+              size="lg"
+              variant="outline"
+              onClick={() => router.push('/register')}
+            >
+              <span className="absolute h-0 w-0 rounded-full bg-white opacity-10 transition-all duration-300 ease-out group-hover/button:h-32 group-hover/button:w-32"></span>
+              <span className="relative">Get Started</span>
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </MotionDiv>
