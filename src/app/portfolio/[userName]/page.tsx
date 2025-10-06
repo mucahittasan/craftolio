@@ -22,6 +22,7 @@ import {
   headingVariants,
 } from '@/features/shared/utils/motions/variants.util';
 import '@/features/portfolio/style/portfolio.css';
+import { EmptyPortfolioState } from '@/features/portfolio/components/empty-portfolio-state';
 
 type Props = {
   params: Promise<{
@@ -37,12 +38,16 @@ export default async function PortfolioPage({ params }: Props) {
     return notFound();
   }
 
-  const { profile, experiences, educations, projects, skills, name } =
+  const { profile, experiences, educations, projects, skills, name, isEmpty } =
     portfolioData;
 
   // Check if the current user is the owner of this portfolio
   const session = await auth();
   const isOwner = session?.user?.id === portfolioData.id;
+
+  if (isEmpty) {
+    return <EmptyPortfolioState />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900">

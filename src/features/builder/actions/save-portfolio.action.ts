@@ -64,13 +64,32 @@ export async function savePortfolio(
 
         if (!isTouched) continue; // Skip empty forms
 
-        const { id, ...eduData } = edu;
+        const {
+          id: _eduId,
+          description: _omit,
+          ...restEdu
+        } = edu as unknown as {
+          id?: string;
+          description?: string | null;
+          school?: string;
+          degree?: string;
+          fieldOfStudy?: string | null;
+          location?: string | null;
+          startDate?: Date | null;
+          endDate?: Date | null;
+        };
+        const eduData = {
+          school: restEdu.school ?? '',
+          degree: restEdu.degree ?? '',
+          fieldOfStudy: restEdu.fieldOfStudy ?? null,
+          location: restEdu.location ?? null,
+          startDate: restEdu.startDate ?? new Date(),
+          endDate: restEdu.endDate ?? null,
+        };
         await tx.education.create({
           data: {
             ...eduData,
             userId,
-            startDate: eduData.startDate || new Date(),
-            endDate: eduData.endDate || null,
           },
         });
       }

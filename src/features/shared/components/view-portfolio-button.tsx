@@ -9,6 +9,7 @@ interface ViewPortfolioButtonProps {
   userName?: string | null;
   userUsername?: string | null;
   userEmail?: string | null;
+  enabled?: boolean;
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'default' | 'sm' | 'lg' | 'icon';
   showIcon?: boolean;
@@ -18,6 +19,7 @@ interface ViewPortfolioButtonProps {
 
 export function ViewPortfolioButton({
   userUsername,
+  enabled = true,
   variant = 'default',
   size = 'default',
   showIcon = true,
@@ -28,6 +30,10 @@ export function ViewPortfolioButton({
   const username = userUsername?.toLowerCase();
 
   const portfolioUrl = `/portfolio/${username}`;
+
+  if (!enabled || !username) {
+    return null;
+  }
 
   return (
     <Button

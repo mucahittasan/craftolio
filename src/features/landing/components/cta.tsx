@@ -4,7 +4,6 @@ import { Button } from '@/features/shared/components/ui/button';
 import { RainbowButton } from '@/features/shared/components/ui/rainbow-button';
 import { MotionDiv } from '@/features/shared/utils/motions/motions.util';
 import { fadeUpVariant } from '@/features/shared/utils/motions/variants.util';
-import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export function Cta() {

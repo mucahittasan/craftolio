@@ -50,7 +50,7 @@ export function RegisterForm() {
             <Input
               id="name"
               name="name"
-              placeholder=" "
+              placeholder="John Doe"
               required
               className="h-12 bg-transparent pl-10 focus-visible:ring-primary"
             />
@@ -62,6 +62,24 @@ export function RegisterForm() {
           )}
         </div>
         <div className="space-y-2">
+          <Label htmlFor="username">Username</Label>
+          <div className="relative flex items-center">
+            <User className="absolute left-3 h-5 w-5 text-muted-foreground" />
+            <Input
+              id="username"
+              name="username"
+              placeholder="johndoe"
+              required
+              className="h-12 bg-transparent pl-10 focus-visible:ring-primary"
+            />
+          </div>
+          {state.errors?.username && (
+            <p className="text-sm font-medium text-destructive">
+              {state.errors.username}
+            </p>
+          )}
+        </div>
+        <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <div className="relative flex items-center">
             <Mail className="absolute left-3 h-5 w-5 text-muted-foreground" />
@@ -69,7 +87,7 @@ export function RegisterForm() {
               id="email"
               name="email"
               type="email"
-              placeholder=" "
+              placeholder="your@email.com"
               required
               className="h-12 bg-transparent pl-10 focus-visible:ring-primary"
             />
@@ -88,7 +106,7 @@ export function RegisterForm() {
               id="password"
               name="password"
               type={showPassword ? 'text' : 'password'}
-              placeholder=" "
+              placeholder="********"
               required
               className="h-12 bg-transparent px-10 focus-visible:ring-primary"
             />
