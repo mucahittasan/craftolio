@@ -17,9 +17,7 @@ interface ViewPortfolioButtonProps {
 }
 
 export function ViewPortfolioButton({
-  userName,
   userUsername,
-  userEmail,
   variant = 'default',
   size = 'default',
   showIcon = true,
