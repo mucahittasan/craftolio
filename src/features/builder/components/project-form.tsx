@@ -192,6 +192,7 @@ export function ProjectForm() {
                       'border-destructive focus-visible:ring-destructive',
                   )}
                 />
+
                 {form.formState.errors.projects?.[index]?.imageUrl && (
                   <p className="text-sm font-medium text-destructive">
                     {form.formState.errors.projects?.[index]?.imageUrl?.message}

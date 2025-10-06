@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'craftolio.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'craftolio.com',
+      },
     ],
   },
 };
