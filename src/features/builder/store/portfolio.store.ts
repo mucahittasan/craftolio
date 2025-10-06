@@ -6,6 +6,7 @@ export type Experience = {
   id: string;
   jobTitle: string;
   company: string;
+  location?: string | null;
   startDate?: Date | null;
   endDate?: Date | null;
   description?: string | null;
@@ -16,6 +17,7 @@ export type Education = {
   school: string;
   degree: string;
   fieldOfStudy: string | null;
+  location?: string | null;
   startDate?: Date | null;
   endDate?: Date | null;
 };
@@ -25,6 +27,7 @@ export type Project = {
   name: string;
   description: string;
   url?: string | null;
+  githubUrl?: string | null;
   imageUrl?: string | null;
 };
 

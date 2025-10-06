@@ -81,6 +81,7 @@ export async function savePortfolio(
           proj.name?.trim() ||
           proj.description?.trim() ||
           proj.url?.trim() ||
+          proj.githubUrl?.trim() ||
           proj.imageUrl?.trim();
 
         if (!isTouched) continue; // Skip empty forms

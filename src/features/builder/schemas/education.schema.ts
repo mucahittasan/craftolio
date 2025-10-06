@@ -6,8 +6,10 @@ export const educationSchema = z
     school: z.string(),
     degree: z.string(),
     fieldOfStudy: z.string().nullish(),
+    location: z.string().nullish(),
     startDate: z.date().nullish(),
     endDate: z.date().nullish(),
+    description: z.string().nullish(),
   })
   .superRefine((data, ctx) => {
     const isTouched =

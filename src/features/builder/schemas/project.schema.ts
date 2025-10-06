@@ -6,6 +6,7 @@ export const projectSchema = z
     name: z.string(),
     description: z.string(),
     url: z.string().nullish().or(z.literal('')),
+    githubUrl: z.string().nullish().or(z.literal('')),
     imageUrl: z.string().nullish().or(z.literal('')),
   })
   .superRefine((data, ctx) => {
@@ -13,6 +14,7 @@ export const projectSchema = z
       data.name?.trim() ||
       data.description?.trim() ||
       data.url?.trim() ||
+      data.githubUrl?.trim() ||
       data.imageUrl?.trim();
 
     if (isTouched) {
@@ -40,6 +42,19 @@ export const projectSchema = z
             code: z.ZodIssueCode.custom,
             message: 'Please enter a valid URL',
             path: ['url'],
+          });
+        }
+      }
+
+      // GitHub URL validation
+      if (data.githubUrl?.trim() && data.githubUrl !== '') {
+        try {
+          new URL(data.githubUrl);
+        } catch {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Please enter a valid GitHub URL',
+            path: ['githubUrl'],
           });
         }
       }
