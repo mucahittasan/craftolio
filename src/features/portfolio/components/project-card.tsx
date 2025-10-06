@@ -59,7 +59,7 @@ export function ProjectCard({
               <>
                 <div className="relative mb-4 h-44 w-full overflow-hidden rounded-xl shadow-lg md:mb-6 md:h-56 md:rounded-2xl">
                   <Image
-                    src={project.imageUrl}
+                    src={`/api/i?url=${encodeURIComponent(project.imageUrl)}`}
                     alt={project.name}
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                     fill
