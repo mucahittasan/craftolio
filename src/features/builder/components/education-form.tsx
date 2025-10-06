@@ -69,7 +69,9 @@ export function EducationForm() {
           school: '',
           degree: '',
           fieldOfStudy: '',
+          location: '',
           startDate: undefined,
+          description: '',
         };
         addEducation(newEdu);
         append(newEdu);
@@ -99,7 +101,9 @@ export function EducationForm() {
       school: '',
       degree: '',
       fieldOfStudy: '',
+      location: '',
       startDate: undefined,
+      description: '',
     };
     addEducation(newEdu);
     append(newEdu);
@@ -150,9 +154,17 @@ export function EducationForm() {
                 )}
               </div>
               {/* Field of Study */}
-              <div className="space-y-2 md:col-span-2">
+              <div className="space-y-2">
                 <Label>Field of Study (Optional)</Label>
                 <Input {...form.register(`educations.${index}.fieldOfStudy`)} />
+              </div>
+              {/* Location */}
+              <div className="space-y-2">
+                <Label>Location (Optional)</Label>
+                <Input
+                  {...form.register(`educations.${index}.location`)}
+                  placeholder="e.g., Istanbul, Turkey"
+                />
               </div>
               {/* Start Date */}
               <div className="space-y-2">
@@ -272,6 +284,7 @@ export function EducationForm() {
                 />
               </div>
             </div>
+
             <Button
               type="button"
               variant="destructive"

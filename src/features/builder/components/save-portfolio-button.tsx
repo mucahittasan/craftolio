@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 
 type SavePortfolioButtonProps = {
-  variant?: 'default' | 'outline' | 'secondary';
+  variant?: 'default' | 'outline' | 'secondary' | 'ghost';
   className?: string;
 };
 

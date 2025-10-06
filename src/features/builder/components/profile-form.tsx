@@ -1,24 +1,40 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
 import { Button } from '@/features/shared/components/ui/button';
 import { Input } from '@/features/shared/components/ui/input';
 import { Label } from '@/features/shared/components/ui/label';
-import { Textarea } from '@/features/shared/components/ui/textarea';
 import { usePortfolioStore } from '@/features/builder/store/portfolio.store';
 import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { RichTextEditor } from '@/features/shared/components/ui/rich-text-editor';
 
 export function ProfileForm() {
   const router = useRouter();
   const { profile, setProfile } = usePortfolioStore();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setProfile({ [name]: value });
-  };
+  const form = useForm<{
+    title: string;
+    location: string;
+    bio: string;
+    website: string;
+    linkedin: string;
+    github: string;
+  }>({
+    mode: 'onBlur',
+    defaultValues: {
+      title: profile.title,
+      location: profile.location,
+      bio: profile.bio,
+      website: profile.website,
+      linkedin: profile.linkedin,
+      github: profile.github,
+    },
+  });
+
+  // Keep store in sync when form fields change
+  form.watch((values) => setProfile(values));
 
   const handleNext = () => {
     router.push('/dashboard/experience');
@@ -32,10 +48,9 @@ export function ProfileForm() {
             <Label htmlFor="title">Your Title</Label>
             <Input
               id="title"
-              name="title"
+              {...form.register('title')}
               placeholder="e.g., Senior Frontend Engineer"
-              value={profile.title}
-              onChange={handleChange}
+              defaultValue={profile.title}
               className="bg-background/50 dark:bg-black/50"
             />
           </div>
@@ -43,34 +58,48 @@ export function ProfileForm() {
             <Label htmlFor="location">Location</Label>
             <Input
               id="location"
-              name="location"
+              {...form.register('location')}
               placeholder="e.g., Istanbul, Turkey"
-              value={profile.location}
-              onChange={handleChange}
+              defaultValue={profile.location}
               className="bg-background/50 dark:bg-black/50"
             />
           </div>
         </div>
         <div className="space-y-2">
           <Label htmlFor="bio">Short Bio</Label>
-          <Textarea
-            id="bio"
-            name="bio"
+          <RichTextEditor
+            value={form.watch('bio') || ''}
+            onChange={(value: string) => {
+              // Sync RHF state
+              form.setValue('bio', value ?? '', {
+                shouldDirty: true,
+                shouldTouch: true,
+              });
+              // Immediately sync store for savePortfolio
+              setProfile({ bio: value ?? '' });
+            }}
             placeholder="Tell us a little bit about yourself..."
-            value={profile.bio}
-            onChange={handleChange}
-            className="min-h-[120px] bg-background/50 dark:bg-black/50"
+            className="bg-background/50 dark:bg-black/50"
           />
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="space-y-2">
             <Label htmlFor="website">Website</Label>
             <Input
               id="website"
-              name="website"
+              {...form.register('website')}
               placeholder="https://your-website.com"
-              value={profile.website}
-              onChange={handleChange}
+              defaultValue={profile.website}
+              className="bg-background/50 dark:bg-black/50"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="linkedin">LinkedIn</Label>
+            <Input
+              id="linkedin"
+              {...form.register('linkedin')}
+              placeholder="https://linkedin.com/in/username"
+              defaultValue={profile.linkedin}
               className="bg-background/50 dark:bg-black/50"
             />
           </div>
@@ -78,20 +107,19 @@ export function ProfileForm() {
             <Label htmlFor="github">GitHub</Label>
             <Input
               id="github"
-              name="github"
+              {...form.register('github')}
               placeholder="https://github.com/username"
-              value={profile.github}
-              onChange={handleChange}
+              defaultValue={profile.github}
               className="bg-background/50 dark:bg-black/50"
             />
           </div>
         </div>
-        <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-between">
+        <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-between">
+          <SavePortfolioButton variant="outline" className="w-full sm:w-auto" />
           <Button onClick={handleNext} className="group w-full sm:w-auto">
             Next Step: Experience
             <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
-          <SavePortfolioButton variant="outline" className="w-full sm:w-auto" />
         </div>
       </div>
     </div>

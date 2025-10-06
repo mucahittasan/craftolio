@@ -10,7 +10,7 @@ export function usePortfolioData() {
   const username = usePortfolioStore((state) => state.username);
   const hasHydrated = useRef(false);
 
-  const { data, isLoading, isError, error, isFetching } = useQuery({
+  const { data, isError, error, isFetching } = useQuery({
     queryKey: ['portfolio'],
     queryFn: async () => {
       const data = await loadPortfolio();
@@ -19,6 +19,7 @@ export function usePortfolioData() {
       }
       return data;
     },
+    // Only load when store is empty and we haven't hydrated yet
     enabled: username === null && !hasHydrated.current,
     staleTime: Infinity,
     gcTime: 1000 * 60 * 30,
@@ -31,8 +32,10 @@ export function usePortfolioData() {
     }
   }, [data, hydrateStore, username]);
 
-  const shouldShowLoading =
-    username === null && isLoading && !hasHydrated.current;
+  // Important: keep showing a skeleton until hydration has completed.
+  // This prevents forms from mounting with empty defaultValues and
+  // missing the later hydration (which would otherwise require a reset).
+  const shouldShowLoading = username === null && !hasHydrated.current;
 
   return {
     isLoading: shouldShowLoading,

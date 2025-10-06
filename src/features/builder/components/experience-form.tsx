@@ -11,7 +11,6 @@ import {
 import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
 import { Button } from '@/features/shared/components/ui/button';
 import { Input } from '@/features/shared/components/ui/input';
-import { Textarea } from '@/features/shared/components/ui/textarea';
 import { Checkbox } from '@/features/shared/components/ui/checkbox';
 import {
   Popover,
@@ -35,6 +34,7 @@ import { experienceFormSchema } from '@/features/builder/schemas/experience.sche
 import { useFormTriggerRegistry } from '@/features/shared/hooks/use-form-trigger-registry.hook';
 import { useFormValidation } from '@/features/shared/hooks/use-form-validation.hook';
 import { CALENDAR_CONFIG } from '@/features/builder/constants/calendar.constant';
+import { RichTextEditor } from '@/features/shared/components/ui/rich-text-editor';
 
 export function ExperienceForm() {
   const router = useRouter();
@@ -117,7 +117,7 @@ export function ExperienceForm() {
             key={field.id}
             className="relative rounded-2xl border border-black/10 bg-white/10 p-6 shadow-lg backdrop-blur-lg dark:border-white/10 dark:bg-black/10"
           >
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {/* Job Title */}
               <div className="space-y-2">
                 <Label>Job Title</Label>
@@ -151,6 +151,26 @@ export function ExperienceForm() {
                   <p className="text-sm font-medium text-destructive">
                     {
                       form.formState.errors.experiences?.[index]?.company
+                        ?.message
+                    }
+                  </p>
+                )}
+              </div>
+              {/* Location */}
+              <div className="space-y-2">
+                <Label>Location (Optional)</Label>
+                <Input
+                  {...form.register(`experiences.${index}.location`)}
+                  placeholder="e.g., Istanbul, Turkey"
+                  className={cn(
+                    form.formState.errors.experiences?.[index]?.location &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
+                />
+                {form.formState.errors.experiences?.[index]?.location && (
+                  <p className="text-sm font-medium text-destructive">
+                    {
+                      form.formState.errors.experiences?.[index]?.location
                         ?.message
                     }
                   </p>
@@ -277,9 +297,23 @@ export function ExperienceForm() {
             {/* Description */}
             <div className="mt-4 space-y-2">
               <Label>Description (Optional)</Label>
-              <Textarea
-                {...form.register(`experiences.${index}.description`)}
-                className="min-h-[100px]"
+              <RichTextEditor
+                value={form.watch(`experiences.${index}.description`) || ''}
+                onChange={(value: string) => {
+                  // Sync RHF state
+                  form.setValue(`experiences.${index}.description`, value, {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                  });
+                  // Immediately sync Zustand store so savePortfolio sees updates
+                  const experienceId = form.getValues(
+                    `experiences.${index}.id`,
+                  );
+                  if (experienceId) {
+                    updateExperience(experienceId, { description: value });
+                  }
+                }}
+                placeholder="Describe your role and achievements..."
               />
             </div>
             <Button

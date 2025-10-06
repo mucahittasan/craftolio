@@ -77,7 +77,10 @@ export function SkillsForm() {
           <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
           Back: Projects
         </Button>
-        <SavePortfolioButton className="w-full bg-green-600 hover:bg-green-700 sm:w-auto" />
+        <SavePortfolioButton
+          variant="ghost"
+          className="w-full bg-green-600 text-white hover:bg-green-700 hover:text-white dark:bg-green-700 dark:text-white dark:hover:bg-green-800 sm:w-auto"
+        />
       </div>
     </div>
   );

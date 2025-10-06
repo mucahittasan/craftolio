@@ -7,7 +7,6 @@ import { usePortfolioStore } from '@/features/builder/store/portfolio.store';
 import { SavePortfolioButton } from '@/features/builder/components/save-portfolio-button';
 import { Button } from '@/features/shared/components/ui/button';
 import { Input } from '@/features/shared/components/ui/input';
-import { Textarea } from '@/features/shared/components/ui/textarea';
 import { PlusCircle, Trash2, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Label } from '@/features/shared/components/ui/label';
 import { useEffect, useRef } from 'react';
@@ -16,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { projectFormSchema } from '@/features/builder/schemas/project.schema';
 import { useFormTriggerRegistry } from '@/features/shared/hooks/use-form-trigger-registry.hook';
 import { useFormValidation } from '@/features/shared/hooks/use-form-validation.hook';
+import { RichTextEditor } from '@/features/shared/components/ui/rich-text-editor';
 
 export function ProjectForm() {
   const router = useRouter();
@@ -51,6 +51,7 @@ export function ProjectForm() {
           name: '',
           description: '',
           url: '',
+          githubUrl: '',
           imageUrl: '',
         };
         addProject(newProj);
@@ -81,6 +82,7 @@ export function ProjectForm() {
       name: '',
       description: '',
       url: '',
+      githubUrl: '',
       imageUrl: '',
     };
     addProject(newProj);
@@ -118,13 +120,20 @@ export function ProjectForm() {
               {/* Description */}
               <div className="space-y-2 md:col-span-2">
                 <Label>Description</Label>
-                <Textarea
-                  {...form.register(`projects.${index}.description`)}
-                  className={cn(
-                    'min-h-[100px]',
-                    form.formState.errors.projects?.[index]?.description &&
-                      'border-destructive focus-visible:ring-destructive',
-                  )}
+                <RichTextEditor
+                  value={form.watch(`projects.${index}.description`) || ''}
+                  onChange={(value: string) => {
+                    form.setValue(`projects.${index}.description`, value, {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    });
+                    const projectId = form.getValues(`projects.${index}.id`);
+                    if (projectId) {
+                      updateProject(projectId, { description: value });
+                    }
+                  }}
+                  placeholder="Describe your project..."
+                  error={!!form.formState.errors.projects?.[index]?.description}
                 />
                 {form.formState.errors.projects?.[index]?.description && (
                   <p className="text-sm font-medium text-destructive">
@@ -140,6 +149,7 @@ export function ProjectForm() {
                 <Label>Project URL (Optional)</Label>
                 <Input
                   {...form.register(`projects.${index}.url`)}
+                  placeholder="https://your-project.com"
                   className={cn(
                     form.formState.errors.projects?.[index]?.url &&
                       'border-destructive focus-visible:ring-destructive',
@@ -151,11 +161,32 @@ export function ProjectForm() {
                   </p>
                 )}
               </div>
+              {/* GitHub URL */}
+              <div className="space-y-2">
+                <Label>GitHub URL (Optional)</Label>
+                <Input
+                  {...form.register(`projects.${index}.githubUrl`)}
+                  placeholder="https://github.com/username/repo"
+                  className={cn(
+                    form.formState.errors.projects?.[index]?.githubUrl &&
+                      'border-destructive focus-visible:ring-destructive',
+                  )}
+                />
+                {form.formState.errors.projects?.[index]?.githubUrl && (
+                  <p className="text-sm font-medium text-destructive">
+                    {
+                      form.formState.errors.projects?.[index]?.githubUrl
+                        ?.message
+                    }
+                  </p>
+                )}
+              </div>
               {/* Image URL */}
               <div className="space-y-2">
                 <Label>Image URL (Optional)</Label>
                 <Input
                   {...form.register(`projects.${index}.imageUrl`)}
+                  placeholder="https://example.com/project-image.jpg"
                   className={cn(
                     form.formState.errors.projects?.[index]?.imageUrl &&
                       'border-destructive focus-visible:ring-destructive',
