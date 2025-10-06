@@ -1,4 +1,4 @@
-Craftolio – Portfolio Builder (Next.js 15, React 19, Prisma, NextAuth)
+# Craftolio – Portfolio Builder (Next.js 15, React 19, Prisma, NextAuth)
 
 ### Overview
 
