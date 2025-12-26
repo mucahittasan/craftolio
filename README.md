@@ -72,19 +72,19 @@ pnpm prisma generate                     # regenerate Prisma Client
 Schema excerpt:
 
 ```startLine:endLine:prisma/schema.prisma
-11:31:model User {
-12:  id       String  @id @default(cuid())
-13:  username String? @unique
-15:  name           String?
-16:  email          String    @unique
-17:  emailVerified  DateTime?
-18:  image          String?
-19:  hashedPassword String?
-26:  profile     Profile?
-27:  experiences Experience[]
-28:  educations  Education[]
-29:  projects    Project[]
-30:  skills      Skill[]
+model User {
+  id             String    @id    @default(cuid())
+  username       String?   @unique
+  name           String?
+  email          String    @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  profile        Profile?
+  experiences    Experience[]
+  educations     Education[]
+  projects       Project[]
+  skills         Skill[]
 }
 ```
 
@@ -96,8 +96,8 @@ Schema excerpt:
 Config excerpt:
 
 ```startLine:endLine:src/auth.ts
-71:76:  secret: process.env.NEXTAUTH_SECRET,
-78:78:export const { handlers, auth, signIn, signOut } = NextAuth(config);
+secret: process.env.NEXTAUTH_SECRET,
+export const { handlers, auth, signIn, signOut } = NextAuth(config);
 ```
 
 Auth routes:
