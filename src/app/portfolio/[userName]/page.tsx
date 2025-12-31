@@ -81,7 +81,6 @@ export default async function PortfolioPage({ params }: Props) {
   const { profile, experiences, educations, projects, skills, name, isEmpty } =
     portfolioData;
 
-  // Check if the current user is the owner of this portfolio
   const session = await auth();
   const isOwner = session?.user?.id === portfolioData.id;
 

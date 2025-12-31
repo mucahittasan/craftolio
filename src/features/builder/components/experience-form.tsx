@@ -300,12 +300,10 @@ export function ExperienceForm() {
               <RichTextEditor
                 value={form.watch(`experiences.${index}.description`) || ''}
                 onChange={(value: string) => {
-                  // Sync RHF state
                   form.setValue(`experiences.${index}.description`, value, {
                     shouldDirty: true,
                     shouldTouch: true,
                   });
-                  // Immediately sync Zustand store so savePortfolio sees updates
                   const experienceId = form.getValues(
                     `experiences.${index}.id`,
                   );

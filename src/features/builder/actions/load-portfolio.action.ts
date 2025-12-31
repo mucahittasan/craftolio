@@ -36,7 +36,6 @@ export async function loadPortfolio() {
       return null;
     }
 
-    // Transform data to match store format
     return {
       username: user.username,
       profile: user.profile

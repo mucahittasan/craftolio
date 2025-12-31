@@ -9,7 +9,6 @@ export async function GET(
   try {
     const { userName } = await params;
 
-    // Kullanıcının var olup olmadığını kontrol et
     const user = await prisma.user.findFirst({
       where: { username: { equals: userName, mode: 'insensitive' } },
       select: { id: true },
@@ -19,7 +18,6 @@ export async function GET(
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Portfolio verilerini al
     const portfolioData = await getUserPortfolio(userName);
 
     if (!portfolioData) {
@@ -29,7 +27,6 @@ export async function GET(
       );
     }
 
-    // PRO plan kontrolü - portfolioData'dan alıyoruz
     if (portfolioData.plan !== 'PRO') {
       return NextResponse.json(
         { error: 'PDF download is a PRO feature' },
@@ -37,11 +34,7 @@ export async function GET(
       );
     }
 
-    // HTML şablonu oluştur
     const htmlContent = generatePdfHtml(portfolioData);
-
-    // HTML'i PDF'e çevir (basit yaklaşım - HTML döndür, tarayıcı print-to-pdf yapabilir)
-    // Production için Puppeteer veya harici servis kullanılabilir
 
     return new NextResponse(htmlContent, {
       headers: {

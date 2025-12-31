@@ -46,7 +46,6 @@ export function ProfileForm() {
     },
   });
 
-  // Keep store in sync when form fields change
   form.watch((values) => setProfile(values));
 
   const handleNext = () => {

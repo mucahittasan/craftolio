@@ -50,7 +50,6 @@ export async function register(
       return { message: 'Email already in use.' };
     }
 
-    // Check username uniqueness (case-insensitive)
     const existingUsername = await prisma.user.findFirst({
       where: { username: { equals: username, mode: 'insensitive' } },
       select: { id: true },
@@ -70,7 +69,6 @@ export async function register(
       },
     });
 
-    // Otomatik giriş yap
     try {
       await signIn('credentials', {
         email,
@@ -87,13 +85,11 @@ export async function register(
       throw error;
     }
   } catch (error) {
-    // Prisma hataları için
     if (error instanceof AuthError) {
       throw error;
     }
     return { message: 'Database Error: Failed to Create Account.' };
   }
 
-  // Bu satıra normalde ulaşılmaz çünkü signIn redirect yapar
   return { message: null };
 }

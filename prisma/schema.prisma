@@ -129,5 +129,5 @@ model Skill {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  name String // e.g., "React", "Next.js"
+  name String
 }

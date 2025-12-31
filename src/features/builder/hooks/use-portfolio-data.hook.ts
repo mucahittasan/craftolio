@@ -13,7 +13,6 @@ export function usePortfolioData() {
   const { data, isError, error, isFetching } = useQuery({
     queryKey: ['portfolio'],
     queryFn: async () => await loadPortfolio(),
-    // Only load when store is empty and we haven't hydrated yet
     enabled: username === null && !hasHydrated.current,
     staleTime: Infinity,
     gcTime: 1000 * 60 * 30,
@@ -26,7 +25,6 @@ export function usePortfolioData() {
     }
   }, [data, hydrateStore, username]);
 
-  // Keep showing a skeleton until hydration has completed to avoid empty defaultValues.
   const shouldShowLoading = username === null && !hasHydrated.current;
 
   return {

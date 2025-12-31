@@ -1,28 +1,14 @@
-// src/components/brand/logo.tsx
 'use client';
 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 
-/**
- * <Logo />
- * A crisp, professional brand mark for Craftolio.
- * - Pixel-perfect at any size (pure SVG)
- * - Light/Dark aware
- * - Optional animated hover sheen (subtle)
- * - Can render icon-only or icon + wordmark
- */
 export type LogoProps = {
-  /** icon size in pixels (height & width are equal for the icon). Default: 28 */
   size?: 20 | 24 | 28 | 32 | 40 | 48 | 56;
-  /** show the wordmark text next to the icon */
   withWordmark?: boolean;
-  /** when true, wraps the logo in a Link to home */
   asLink?: boolean;
-  /** className for the outer wrapper */
   className?: string;
-  /** compact reduces spacing between icon and wordmark */
   compact?: boolean;
 };
 
@@ -50,11 +36,9 @@ export function Logo({
 
   return (
     <Wrapper>
-      {/* Icon in a soft rounded badge */}
       <span
         className={cn(
           'relative inline-grid place-items-center rounded-xl p-[1px]',
-          // subtle border via gradient paint
           '[background:linear-gradient(135deg,hsl(var(--border))_0%,transparent_100%)]',
           'dark:[background:linear-gradient(135deg,rgba(255,255,255,0.18)_0%,transparent_100%)]',
         )}
@@ -63,7 +47,6 @@ export function Logo({
         <span className="pointer-events-none inline-grid h-full w-full place-items-center rounded-[10px] bg-muted/60">
           <CraftolioGlyph className="h-[70%] w-[70%]" />
         </span>
-        {/* sheen on hover */}
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -91,10 +74,6 @@ export function Logo({
   );
 }
 
-/**
- * CraftolioGlyph – custom SVG icon (leaf + stylized "C" track)
- * Works on light & dark themes.
- */
 export function CraftolioGlyph({ className }: { className?: string }) {
   const id = React.useId();
   const gradId = `craftolio-grad-${id}`;
@@ -131,7 +110,6 @@ export function CraftolioGlyph({ className }: { className?: string }) {
         </filter>
       </defs>
 
-      {/* Outer ring with gradient stroke */}
       <circle
         cx="32"
         cy="32"
@@ -141,7 +119,6 @@ export function CraftolioGlyph({ className }: { className?: string }) {
         opacity="0.9"
       />
 
-      {/* Stylized C track */}
       <path
         d="M47 26.5c-2.8-6.2-9-10.5-16.2-10.5C20.8 16 14 22.8 14 31.1S20.8 46.2 30.8 46.2c6.9 0 12.9-4 15.9-9.8"
         stroke="currentColor"
@@ -152,7 +129,6 @@ export function CraftolioGlyph({ className }: { className?: string }) {
         filter={`url(#${glowId})`}
       />
 
-      {/* Sprout/leaf element */}
       <path
         d="M46 19c-2.5 0-5 .9-6.9 2.6 1.7 1.9 2.6 4.4 2.6 6.9 2.5 0 5-0.9 6.9-2.6A10 10 0 0 0 46 19z"
         fill={`url(#${gradId})`}
@@ -160,13 +136,3 @@ export function CraftolioGlyph({ className }: { className?: string }) {
     </svg>
   );
 }
-
-// ---------------------------------------------------------------------------
-// Usage example: replace the current header left-side brand with <Logo />
-// ---------------------------------------------------------------------------
-// In your Header component:
-// import { Logo } from "@/components/brand/logo";
-// ...
-// <Logo asLink className="gap-2.5" />
-// If you want just the icon (e.g., for the favicon spot or sidebar):
-// <Logo withWordmark={false} size={24} />

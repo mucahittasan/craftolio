@@ -18,7 +18,6 @@ export const config = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          // Google ile giriş yapanlara otomatik username oluştur
           username: profile.email.split('@')[0].replace(/[^a-zA-Z0-9_\.]/g, ''),
         };
       },

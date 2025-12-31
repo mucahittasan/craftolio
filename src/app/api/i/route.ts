@@ -43,7 +43,6 @@ export async function GET(req: Request) {
   return new NextResponse(bytes, {
     headers: {
       'content-type': type,
-      // CDN/cache
       'cache-control':
         'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
     },

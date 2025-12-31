@@ -6,15 +6,10 @@ export type ValidationError = {
   fields: string[];
 };
 
-/**
- * Validates the entire portfolio state before saving
- * Returns an array of validation errors, empty if valid
- */
 export function validatePortfolio(): ValidationError[] {
   const state = usePortfolioStore.getState();
   const errors: ValidationError[] = [];
 
-  // Validate Profile
   if (!state.profile.title?.trim()) {
     errors.push({
       section: 'profile',
@@ -30,9 +25,7 @@ export function validatePortfolio(): ValidationError[] {
     });
   }
 
-  // Validate Experiences
   state.experiences.forEach((exp, index) => {
-    // Check if form is "touched" (has any data)
     const isTouched =
       exp.jobTitle?.trim() ||
       exp.company?.trim() ||
@@ -40,10 +33,8 @@ export function validatePortfolio(): ValidationError[] {
       exp.startDate ||
       exp.endDate;
 
-    // If not touched at all, skip validation (it won't be saved anyway)
     if (!isTouched) return;
 
-    // If touched, validate required fields
     const expErrors: string[] = [];
 
     if (!exp.jobTitle?.trim()) {
@@ -65,9 +56,7 @@ export function validatePortfolio(): ValidationError[] {
     }
   });
 
-  // Validate Educations
   state.educations.forEach((edu, index) => {
-    // Check if form is "touched" (has any data)
     const isTouched =
       edu.school?.trim() ||
       edu.degree?.trim() ||
@@ -75,10 +64,8 @@ export function validatePortfolio(): ValidationError[] {
       edu.startDate ||
       edu.endDate;
 
-    // If not touched at all, skip validation (it won't be saved anyway)
     if (!isTouched) return;
 
-    // If touched, validate required fields
     const eduErrors: string[] = [];
 
     if (!edu.school?.trim()) {
@@ -100,19 +87,15 @@ export function validatePortfolio(): ValidationError[] {
     }
   });
 
-  // Validate Projects
   state.projects.forEach((proj, index) => {
-    // Check if form is "touched" (has any data)
     const isTouched =
       proj.name?.trim() ||
       proj.description?.trim() ||
       proj.url?.trim() ||
       proj.imageUrl?.trim();
 
-    // If not touched at all, skip validation (it won't be saved anyway)
     if (!isTouched) return;
 
-    // If touched, validate required fields
     const projErrors: string[] = [];
 
     if (!proj.name?.trim()) {
@@ -131,7 +114,6 @@ export function validatePortfolio(): ValidationError[] {
     }
   });
 
-  // Validate Skills - at least one skill required
   if (state.skills.length === 0) {
     errors.push({
       section: 'skills',
@@ -143,9 +125,6 @@ export function validatePortfolio(): ValidationError[] {
   return errors;
 }
 
-/**
- * Groups validation errors by section
- */
 export function groupErrorsBySection(errors: ValidationError[]) {
   return errors.reduce(
     (acc, error) => {
@@ -159,9 +138,6 @@ export function groupErrorsBySection(errors: ValidationError[]) {
   );
 }
 
-/**
- * Gets the route path for a section
- */
 export function getSectionRoute(section: ValidationError['section']): string {
   const routes = {
     profile: '/dashboard',

@@ -32,7 +32,6 @@ interface SectionTab {
   color: ColorVariant;
 }
 
-// Constants
 const FEATURES: Feature[] = [
   {
     icon: Palette,
@@ -95,7 +94,6 @@ const SECTION_TABS: SectionTab[] = [
   },
 ];
 
-// Sub-components
 function FeatureCard({ feature }: { feature: Feature }) {
   const colors = getColorClasses(feature.color);
 
@@ -365,7 +363,6 @@ function SectionPreview({ activeSection }: { activeSection: string }) {
   );
 }
 
-// Main component
 export function Features() {
   const [activeSection, setActiveSection] = useState('experience');
 

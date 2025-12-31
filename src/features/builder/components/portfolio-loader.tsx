@@ -4,11 +4,6 @@ import { usePortfolioData } from '@/features/builder/hooks/use-portfolio-data.ho
 import { FormSkeleton } from '@/features/builder/components/form-skeleton';
 import { memo } from 'react';
 
-/**
- * This component loads the user's portfolio data using React Query
- * and shows a skeleton while loading.
- * Memoized to prevent unnecessary re-renders during navigation.
- */
 function PortfolioLoaderComponent({ children }: { children: React.ReactNode }) {
   const { isLoading } = usePortfolioData();
 

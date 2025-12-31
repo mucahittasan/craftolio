@@ -37,7 +37,6 @@ export function useNavigationProgress() {
     // Initial setup
     handleMutation();
 
-    // Watch for new links being added
     const mutationObserver = new MutationObserver(handleMutation);
     mutationObserver.observe(document.body, {
       childList: true,

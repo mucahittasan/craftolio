@@ -33,7 +33,6 @@ export const projectSchema = z
         });
       }
 
-      // URL validation
       if (data.url?.trim() && data.url !== '') {
         try {
           new URL(data.url);
@@ -46,7 +45,6 @@ export const projectSchema = z
         }
       }
 
-      // GitHub URL validation
       if (data.githubUrl?.trim() && data.githubUrl !== '') {
         try {
           new URL(data.githubUrl);

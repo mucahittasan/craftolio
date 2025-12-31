@@ -17,7 +17,6 @@ import { Label } from '@/features/shared/components/ui/label';
 import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Popüler yetenekler kategorilere göre
 const POPULAR_SKILLS = {
   Frontend: [
     'React',
@@ -149,13 +148,11 @@ export function SkillsForm() {
   ]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Mevcut skill isimlerini al (case-insensitive kontrol için)
   const existingSkillNames = useMemo(
     () => skills.map((s) => s.name.toLowerCase()),
     [skills],
   );
 
-  // Arama sonuçlarını filtrele
   const filteredSkills = useMemo(() => {
     if (!searchQuery.trim()) return null;
 
@@ -213,7 +210,6 @@ export function SkillsForm() {
   return (
     <div>
       <div className="rounded-2xl border border-black/10 bg-white/10 p-6 shadow-lg backdrop-blur-lg dark:border-white/10 dark:bg-black/10">
-        {/* Manuel skill ekleme */}
         <div className="space-y-2">
           <Label htmlFor="skill-input">Add a custom skill</Label>
           <div className="flex gap-2">
@@ -230,7 +226,6 @@ export function SkillsForm() {
           </div>
         </div>
 
-        {/* Eklenen skill'ler */}
         {skills.length > 0 && (
           <div className="mt-6">
             <Label className="mb-3 block">Your Skills ({skills.length})</Label>
@@ -254,13 +249,11 @@ export function SkillsForm() {
           </div>
         )}
 
-        {/* Popüler skill'ler bölümü */}
         <div className="mt-8 border-t border-black/10 pt-6 dark:border-white/10">
           <Label className="mb-4 block text-lg font-semibold">
             Popular Skills
           </Label>
 
-          {/* Arama */}
           <div className="relative mb-4">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -271,7 +264,6 @@ export function SkillsForm() {
             />
           </div>
 
-          {/* Arama sonuçları */}
           {filteredSkills && filteredSkills.length > 0 && (
             <div className="mb-4 rounded-lg border border-primary/20 bg-primary/5 p-3">
               <Label className="mb-2 block text-sm text-muted-foreground">
@@ -293,7 +285,6 @@ export function SkillsForm() {
             </div>
           )}
 
-          {/* Kategoriler */}
           <div className="space-y-3">
             {Object.entries(POPULAR_SKILLS).map(
               ([category, categorySkills]) => (

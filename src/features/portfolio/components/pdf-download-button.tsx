@@ -22,7 +22,6 @@ export function PdfDownloadButton({ userName }: PdfDownloadButtonProps) {
         throw new Error('Failed to generate PDF');
       }
 
-      // HTML içeriğini al ve yeni pencerede aç (print dialog için)
       const htmlContent = await response.text();
       const newWindow = window.open('', '_blank');
       if (newWindow) {

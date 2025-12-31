@@ -19,20 +19,17 @@ export async function savePortfolio(
     portfolioState;
 
   try {
-    // Delete all existing data first (without transaction for Supabase compatibility)
     await prisma.experience.deleteMany({ where: { userId } });
     await prisma.education.deleteMany({ where: { userId } });
     await prisma.project.deleteMany({ where: { userId } });
     await prisma.skill.deleteMany({ where: { userId } });
 
-    // Upsert profile
     await prisma.profile.upsert({
       where: { userId },
       update: profile,
       create: { userId, ...profile },
     });
 
-    // Prepare experiences data
     const experiencesToCreate = experiences
       .filter(
         (exp) =>
@@ -53,7 +50,6 @@ export async function savePortfolio(
       await prisma.experience.createMany({ data: experiencesToCreate });
     }
 
-    // Prepare educations data
     const educationsToCreate = educations
       .filter(
         (edu) =>
@@ -93,7 +89,6 @@ export async function savePortfolio(
       await prisma.education.createMany({ data: educationsToCreate });
     }
 
-    // Prepare projects data
     const projectsToCreate = projects
       .filter(
         (proj) =>
@@ -112,7 +107,6 @@ export async function savePortfolio(
       await prisma.project.createMany({ data: projectsToCreate });
     }
 
-    // Create skills
     if (skills.length > 0) {
       await prisma.skill.createMany({
         data: skills.map((skill) => ({ name: skill.name, userId })),

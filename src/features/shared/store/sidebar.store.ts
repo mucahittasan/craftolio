@@ -28,13 +28,9 @@ export const useSidebarStore = create<SidebarState>()(
     {
       name: 'sidebar-storage',
       version: 2,
-      // Persist ONLY desktop expansion preference.
-      // Mobile open state and breakpoint are viewport-derived and should not persist.
       partialize: (state) => ({ isExpanded: state.isExpanded }),
-      // Drop legacy keys from older persisted objects that included mobile flags
       migrate: (persistedState: unknown, version) => {
         const state = (persistedState as Record<string, unknown>) || {};
-        // From v1 -> v2: keep only isExpanded; ensure others start fresh
         if (version < 2) {
           return {
             isExpanded: (state.isExpanded as boolean) ?? true,
