@@ -1,45 +1,49 @@
 'use client';
 
-import { Button } from '@/features/shared/components/ui/button';
-import { RainbowButton } from '@/features/shared/components/ui/rainbow-button';
-import { MotionDiv } from '@/features/shared/utils/motions/motions.util';
-import { fadeUpVariant } from '@/features/shared/utils/motions/variants.util';
 import Link from 'next/link';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 
 export function Cta() {
   return (
-    <section className="container relative mx-auto px-4 py-24">
-      <div className="absolute bottom-[0%] right-[10%] h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tr from-[#9c40ff] to-[#ffaa40] blur-[220px]" />
-      <MotionDiv
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.5 }}
-        variants={fadeUpVariant}
-        className="relative overflow-hidden text-center md:p-12"
-      >
-        <div className="relative z-10">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-            Ready to Build Your Future?
+    <section className="relative py-24">
+      {/* Subtle gradient background */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950" />
+
+      <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">
+            Ready to showcase your work?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            Join thousands of professionals who are showcasing their work and
-            growing their careers with Craftolio.
+          <p className="mx-auto mt-6 max-w-xl text-lg text-gray-600 dark:text-gray-400">
+            Join thousands of professionals who have built their portfolio with
+            Craftolio. It takes just a few minutes to get started.
           </p>
-          <div className="mt-8">
-            <Button
-              size="lg"
-              asChild
-              className="group h-12 bg-foreground px-8 text-base font-bold text-background hover:bg-foreground/90"
-            ></Button>
-            <RainbowButton className="text-sm transition duration-200 hover:scale-[1.02] sm:text-base">
-              ✨{' '}
-              <Link href="/register" className="ml-2">
-                Start for Free
-              </Link>
-            </RainbowButton>
+
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="/register"
+              className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-8 font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:shadow-xl hover:shadow-violet-500/30"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Create Your Portfolio
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-700 to-indigo-700 opacity-0 transition-opacity group-hover:opacity-100" />
+            </Link>
+            <Link
+              href="/portfolio/mucahittasan"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white/80 px-8 font-semibold text-gray-700 backdrop-blur-sm transition-all hover:border-gray-300 hover:bg-white dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-gray-800"
+            >
+              View Example
+              <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
+
+          <p className="mt-6 text-sm text-gray-500 dark:text-gray-500">
+            Free to use · No credit card required
+          </p>
         </div>
-      </MotionDiv>
+      </div>
     </section>
   );
 }

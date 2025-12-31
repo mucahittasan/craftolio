@@ -1,0 +1,39 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="craftolio-grad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff7ab6"/>
+      <stop offset="55%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <filter id="craftolio-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background for better visibility -->
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="#0f0f1a"/>
+
+  <!-- Outer ring with gradient stroke -->
+  <circle cx="32" cy="32" r="22" stroke="url(#craftolio-grad)" stroke-width="3.5" fill="none" opacity="0.95"/>
+
+  <!-- Stylized C track -->
+  <path
+    d="M45 27c-2.5-5.5-8-9.5-14.5-9.5C21.5 17.5 15.5 23.5 15.5 32s6 14.5 15 14.5c6 0 11.5-3.5 14-8.5"
+    stroke="#e5e5e5"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+    filter="url(#craftolio-glow)"
+  />
+
+  <!-- Sprout/leaf element -->
+  <path
+    d="M44 20c-2.2 0-4.5.8-6.2 2.3 1.5 1.7 2.3 4 2.3 6.2 2.2 0 4.5-.8 6.2-2.3-1.5-1.7-2.3-4-2.3-6.2z"
+    fill="url(#craftolio-grad)"
+  />
+</svg>

@@ -1,17 +1,16 @@
 import { Features } from '@/features/landing/components/features';
 import { Hero } from '@/features/landing/components/hero';
 import { HowItWorks } from '@/features/landing/components/how-it-works';
-import { Pricing } from '@/features/landing/components/pricing';
+import { PdfShowcase } from '@/features/landing/components/pdf-showcase';
 import { Cta } from '@/features/landing/components/cta';
 
 export default function HomePage() {
   return (
-    <div>
-      <div className="absolute left-[20%] top-[60%] h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tr from-[#9c40ff] to-[#ffaa40] blur-[220px]" />
+    <div className="overflow-hidden">
       <Hero />
       <Features />
+      <PdfShowcase />
       <HowItWorks />
-      <Pricing />
       <Cta />
     </div>
   );

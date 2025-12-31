@@ -43,7 +43,7 @@ export function MobileMenu({ isOpen, session }: MobileMenuProps) {
                     className="w-full justify-start dark:hover:bg-white/20"
                     size="lg"
                   >
-                    <Link href="/#pricing">Pricing</Link>
+                    <Link href="/#how-it-works">How It Works</Link>
                   </Button>
 
                   <div className="my-2 h-px bg-border/50" />

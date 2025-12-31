@@ -47,6 +47,8 @@ export async function loadPortfolio() {
             website: user.profile.website || '',
             linkedin: user.profile.linkedin || '',
             github: user.profile.github || '',
+            email: user.profile.email || '',
+            phone: user.profile.phone || '',
           }
         : {
             title: '',
@@ -55,6 +57,8 @@ export async function loadPortfolio() {
             website: '',
             linkedin: '',
             github: '',
+            email: '',
+            phone: '',
           },
       experiences: user.experiences.map((exp) => ({
         id: exp.id,

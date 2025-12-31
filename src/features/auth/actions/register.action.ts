@@ -3,7 +3,8 @@
 import * as z from 'zod';
 import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
-import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -68,10 +69,31 @@ export async function register(
         hashedPassword,
       },
     });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    // Otomatik giriş yap
+    try {
+      await signIn('credentials', {
+        email,
+        password,
+        redirectTo: '/dashboard',
+      });
+    } catch (error) {
+      if (error instanceof AuthError) {
+        return {
+          message:
+            'Account created but auto-login failed. Please login manually.',
+        };
+      }
+      throw error;
+    }
   } catch (error) {
+    // Prisma hataları için
+    if (error instanceof AuthError) {
+      throw error;
+    }
     return { message: 'Database Error: Failed to Create Account.' };
   }
 
-  redirect('/login');
+  // Bu satıra normalde ulaşılmaz çünkü signIn redirect yapar
+  return { message: null };
 }
