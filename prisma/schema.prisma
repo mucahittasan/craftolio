@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -17,6 +18,7 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
+  plan           String    @default("FREE") // FREE, PRO
   accounts       Account[]
   sessions       Session[]
 
@@ -80,6 +82,8 @@ model Profile {
   website  String?
   linkedin String?
   github   String?
+  email    String?
+  phone    String?
 }
 
 model Experience {

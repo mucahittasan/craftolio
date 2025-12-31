@@ -19,51 +19,51 @@ export async function savePortfolio(
     portfolioState;
 
   try {
-    await prisma.$transaction(async (tx) => {
-      await tx.experience.deleteMany({ where: { userId } });
-      await tx.education.deleteMany({ where: { userId } });
-      await tx.project.deleteMany({ where: { userId } });
-      await tx.skill.deleteMany({ where: { userId } });
+    // Delete all existing data first (without transaction for Supabase compatibility)
+    await prisma.experience.deleteMany({ where: { userId } });
+    await prisma.education.deleteMany({ where: { userId } });
+    await prisma.project.deleteMany({ where: { userId } });
+    await prisma.skill.deleteMany({ where: { userId } });
 
-      await tx.profile.upsert({
-        where: { userId },
-        update: profile,
-        create: { userId, ...profile },
-      });
+    // Upsert profile
+    await prisma.profile.upsert({
+      where: { userId },
+      update: profile,
+      create: { userId, ...profile },
+    });
 
-      // Only save experiences that have actual data
-      for (const exp of experiences) {
-        const isTouched =
+    // Prepare experiences data
+    const experiencesToCreate = experiences
+      .filter(
+        (exp) =>
           exp.jobTitle?.trim() ||
           exp.company?.trim() ||
           exp.description?.trim() ||
           exp.startDate ||
-          exp.endDate;
+          exp.endDate,
+      )
+      .map(({ id, ...expData }) => ({
+        ...expData,
+        userId,
+        startDate: expData.startDate || new Date(),
+        endDate: expData.endDate || null,
+      }));
 
-        if (!isTouched) continue; // Skip empty forms
+    if (experiencesToCreate.length > 0) {
+      await prisma.experience.createMany({ data: experiencesToCreate });
+    }
 
-        const { id, ...expData } = exp;
-        await tx.experience.create({
-          data: {
-            ...expData,
-            userId,
-            startDate: expData.startDate || new Date(),
-            endDate: expData.endDate || null,
-          },
-        });
-      }
-
-      // Only save educations that have actual data
-      for (const edu of educations) {
-        const isTouched =
+    // Prepare educations data
+    const educationsToCreate = educations
+      .filter(
+        (edu) =>
           edu.school?.trim() ||
           edu.degree?.trim() ||
           edu.fieldOfStudy?.trim() ||
           edu.startDate ||
-          edu.endDate;
-
-        if (!isTouched) continue; // Skip empty forms
-
+          edu.endDate,
+      )
+      .map((edu) => {
         const {
           id: _eduId,
           description: _omit,
@@ -78,40 +78,46 @@ export async function savePortfolio(
           startDate?: Date | null;
           endDate?: Date | null;
         };
-        const eduData = {
+        return {
           school: restEdu.school ?? '',
           degree: restEdu.degree ?? '',
           fieldOfStudy: restEdu.fieldOfStudy ?? null,
           location: restEdu.location ?? null,
           startDate: restEdu.startDate ?? new Date(),
           endDate: restEdu.endDate ?? null,
+          userId,
         };
-        await tx.education.create({
-          data: {
-            ...eduData,
-            userId,
-          },
-        });
-      }
+      });
 
-      // Only save projects that have actual data
-      for (const proj of projects) {
-        const isTouched =
+    if (educationsToCreate.length > 0) {
+      await prisma.education.createMany({ data: educationsToCreate });
+    }
+
+    // Prepare projects data
+    const projectsToCreate = projects
+      .filter(
+        (proj) =>
           proj.name?.trim() ||
           proj.description?.trim() ||
           proj.url?.trim() ||
           proj.githubUrl?.trim() ||
-          proj.imageUrl?.trim();
+          proj.imageUrl?.trim(),
+      )
+      .map(({ id, ...projData }) => ({
+        ...projData,
+        userId,
+      }));
 
-        if (!isTouched) continue; // Skip empty forms
+    if (projectsToCreate.length > 0) {
+      await prisma.project.createMany({ data: projectsToCreate });
+    }
 
-        const { id, ...projData } = proj;
-        await tx.project.create({ data: { ...projData, userId } });
-      }
-      for (const skill of skills) {
-        await tx.skill.create({ data: { name: skill.name, userId } });
-      }
-    });
+    // Create skills
+    if (skills.length > 0) {
+      await prisma.skill.createMany({
+        data: skills.map((skill) => ({ name: skill.name, userId })),
+      });
+    }
 
     revalidatePath('/dashboard');
     if (username) {

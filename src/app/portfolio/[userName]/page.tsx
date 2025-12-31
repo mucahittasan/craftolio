@@ -6,7 +6,15 @@ import { ExperienceTimeline } from '@/features/portfolio/components/experience-t
 import { EducationTimeline } from '@/features/portfolio/components/education-timeline';
 import { ProjectCard } from '@/features/portfolio/components/project-card';
 import { SkillsBadges } from '@/features/portfolio/components/skills-badges';
-import { Edit, MoreVertical, Sparkles } from 'lucide-react';
+import { PdfDownloadButton } from '@/features/portfolio/components/pdf-download-button';
+import {
+  Edit,
+  MoreVertical,
+  Briefcase,
+  GraduationCap,
+  FolderKanban,
+  Wrench,
+} from 'lucide-react';
 import { auth } from '@/auth';
 import Link from 'next/link';
 import { Button } from '@/features/shared/components/ui/button';
@@ -16,19 +24,51 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/features/shared/components/ui/popover';
-import { MotionSection } from '@/features/shared/utils/motions/motions.util';
-import {
-  fadeUpVariant,
-  headingVariants,
-} from '@/features/shared/utils/motions/variants.util';
 import '@/features/portfolio/style/portfolio.css';
 import { EmptyPortfolioState } from '@/features/portfolio/components/empty-portfolio-state';
+import type { Metadata } from 'next';
 
 type Props = {
   params: Promise<{
     userName: string;
   }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { userName } = await params;
+  const portfolioData = await getUserPortfolio(userName);
+
+  if (!portfolioData) {
+    return {
+      title: 'Portfolio Not Found',
+    };
+  }
+
+  const name = portfolioData.name ?? 'Portfolio';
+  const profileTitle = portfolioData.profile?.title;
+
+  const title = profileTitle ? `${name} - ${profileTitle}` : name;
+
+  const description =
+    portfolioData.profile?.bio ??
+    `View ${name}'s professional portfolio on Craftolio.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'profile',
+      images: portfolioData.image ? [portfolioData.image] : undefined,
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
+  };
+}
 
 export default async function PortfolioPage({ params }: Props) {
   const { userName } = await params;
@@ -50,172 +90,134 @@ export default async function PortfolioPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900">
-      {/* Background decorative elements */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-600/20 blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-br from-indigo-400/20 to-pink-600/20 blur-3xl"></div>
-        <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-gradient-to-br from-cyan-400/10 to-blue-600/10 blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10">
-        <div className="container relative mx-auto max-w-7xl p-0 md:p-8">
-          {/* Actions menu */}
-          <div className="absolute right-4 top-4 z-20 md:right-8 md:top-8">
-            {/* Mobile: compact popover */}
-            <div className="md:hidden">
-              <Popover>
-                <PopoverTrigger asChild>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <div className="mx-auto max-w-4xl px-4 py-8 md:px-6 md:py-16">
+        {/* Actions menu */}
+        <div className="fixed right-4 top-4 z-20 md:right-6 md:top-6">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-10 w-10 rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+              >
+                <MoreVertical className="h-5 w-5" />
+                <span className="sr-only">Open actions</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-56 p-2">
+              <div className="flex flex-col gap-2">
+                <PdfDownloadButton userName={userName} />
+                {isOwner && (
                   <Button
-                    size="icon"
-                    variant="ghost"
-                    className="rounded-full border border-white/20 bg-black/10 shadow-none backdrop-blur-sm"
+                    asChild
+                    size="sm"
+                    className="flex h-10 w-full items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 text-sm font-medium text-gray-900 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-800"
                   >
-                    <MoreVertical className="h-5 w-5" />
-                    <span className="sr-only">Open actions</span>
+                    <Link href="/dashboard">
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit Portfolio
+                    </Link>
                   </Button>
-                </PopoverTrigger>
-                <PopoverContent align="end" className="w-56 p-2">
-                  {isOwner ? (
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="w-full justify-start"
-                    >
-                      <Link href="/dashboard">
-                        <Edit className="mr-2 h-4 w-4" />
-                        Edit Portfolio
-                      </Link>
-                    </Button>
-                  ) : null}
-                  <ThemeToggle showLabel className="w-full justify-start" />
-                </PopoverContent>
-              </Popover>
-            </div>
-            {/* Desktop: show buttons inline */}
-            <div className="hidden flex-col gap-2 md:flex">
-              {isOwner ? (
-                <Button
-                  asChild
-                  size="sm"
-                  className="text-blac gap-2 border border-white/20 bg-black/10 shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-black/30 hover:text-white"
-                >
-                  <Link href="/dashboard">
-                    <Edit className="h-4 w-4" />
-                    Edit Portfolio
-                  </Link>
-                </Button>
-              ) : null}
-              <ThemeToggle showLabel />
-            </div>
-          </div>
-
-          {/* Hero Section */}
-          <MotionSection
-            initial="hidden"
-            animate="visible"
-            variants={headingVariants}
-            custom={0}
-            className="relative mb-8 md:mb-16"
-          >
-            <div className="glass-panel rounded-none border-0 p-4 shadow-none md:rounded-3xl md:border md:border-white/20 md:p-12 md:shadow-2xl">
-              <PortfolioHeader
-                name={name}
-                title={profile?.title}
-                location={profile?.location}
-                avatarUrl={portfolioData.image}
-                bio={profile?.bio}
-                linkedin={profile?.linkedin}
-                github={profile?.github}
-                website={profile?.website}
-              />
-
-              {/* Floating decorative elements */}
-              <div className="absolute right-4 top-4 text-blue-500/30">
-                <Sparkles className="h-8 w-8 animate-pulse" />
+                )}
+                <ThemeToggle showLabel />
               </div>
-              <div className="absolute bottom-4 left-4 text-purple-500/30">
-                <Sparkles className="h-6 w-6 animate-pulse delay-1000" />
-              </div>
-            </div>
-          </MotionSection>
+            </PopoverContent>
+          </Popover>
+        </div>
 
-          {/* Skills Section - Centered */}
-          <MotionSection
-            initial="hidden"
-            animate="visible"
-            variants={fadeUpVariant}
-            custom={0.2}
-            className="mb-6 md:mb-12"
-          >
-            <div className="glass-panel rounded-none border-0 p-4 shadow-none md:rounded-2xl md:border md:border-white/20 md:p-8 md:shadow-xl">
-              <h2 className="text-gradient mb-8 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-center text-2xl font-bold text-transparent">
+        {/* Header */}
+        <section className="mb-12">
+          <PortfolioHeader
+            name={name}
+            title={profile?.title}
+            location={profile?.location}
+            avatarUrl={portfolioData.image}
+            bio={profile?.bio}
+            linkedin={profile?.linkedin}
+            github={profile?.github}
+            website={profile?.website}
+            email={profile?.email}
+            phone={profile?.phone}
+          />
+        </section>
+
+        {/* Skills */}
+        {skills && skills.length > 0 && (
+          <section className="mb-14">
+            <div className="mb-5 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/30">
+                <Wrench className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Skills
               </h2>
-              <div className="flex justify-center">
-                <SkillsBadges skills={skills} />
-              </div>
             </div>
-          </MotionSection>
+            <SkillsBadges skills={skills} />
+          </section>
+        )}
 
-          {/* Main Content */}
-          <div className="space-y-12">
-            {/* Work Experience */}
-            <MotionSection
-              initial="hidden"
-              animate="visible"
-              variants={fadeUpVariant}
-              custom={0.3}
-            >
-              <div className="glass-panel overflow-hidden rounded-none border-0 p-4 shadow-none md:rounded-2xl md:border md:border-white/20 md:p-8 md:shadow-xl">
-                <h2 className="text-gradient mb-8 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-2xl font-bold text-transparent">
-                  Work Experience
-                </h2>
-                <ExperienceTimeline experiences={experiences} />
+        {/* Experience */}
+        {experiences && experiences.length > 0 && (
+          <section className="mb-14">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+                <Briefcase className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
               </div>
-            </MotionSection>
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Experience
+              </h2>
+            </div>
+            <ExperienceTimeline experiences={experiences} />
+          </section>
+        )}
 
-            {/* Education */}
-            {educations && educations.length > 0 && (
-              <MotionSection
-                initial="hidden"
-                animate="visible"
-                variants={fadeUpVariant}
-                custom={0.4}
-              >
-                <div className="glass-panel overflow-hidden rounded-none border-0 p-4 shadow-none md:rounded-2xl md:border md:border-white/20 md:p-8 md:shadow-xl">
-                  <h2 className="text-gradient mb-8 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-2xl font-bold text-transparent">
-                    Education
-                  </h2>
-                  <EducationTimeline educations={educations} />
-                </div>
-              </MotionSection>
-            )}
-
-            {/* Projects */}
-            <MotionSection
-              initial="hidden"
-              animate="visible"
-              variants={fadeUpVariant}
-              custom={0.5}
-            >
-              <div className="glass-panel overflow-hidden rounded-none border-0 p-4 shadow-none md:rounded-2xl md:border md:border-white/20 md:p-8 md:shadow-xl">
-                <h2 className="text-gradient mb-8 bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-2xl font-bold text-transparent">
-                  Projects
-                </h2>
-                <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-6">
-                  {projects.map((project, index) => (
-                    <ProjectCard
-                      key={project.id}
-                      project={project}
-                      index={index}
-                    />
-                  ))}
-                </div>
+        {/* Education */}
+        {educations && educations.length > 0 && (
+          <section className="mb-14">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30">
+                <GraduationCap className="h-5 w-5 text-blue-600 dark:text-blue-400" />
               </div>
-            </MotionSection>
-          </div>
-        </div>
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Education
+              </h2>
+            </div>
+            <EducationTimeline educations={educations} />
+          </section>
+        )}
+
+        {/* Projects */}
+        {projects && projects.length > 0 && (
+          <section className="mb-16">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/30">
+                <FolderKanban className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Projects
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {projects.map((project, index) => (
+                <ProjectCard key={project.id} project={project} index={index} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Footer */}
+        <footer className="border-t border-gray-200 pt-8 dark:border-gray-800">
+          <p className="text-center text-sm text-gray-400 dark:text-gray-500">
+            Built with{' '}
+            <Link
+              href="/"
+              className="font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            >
+              Craftolio
+            </Link>
+          </p>
+        </footer>
       </div>
     </div>
   );

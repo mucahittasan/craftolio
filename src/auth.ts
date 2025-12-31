@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import type { NextAuthConfig } from 'next-auth';
@@ -8,6 +9,20 @@ import type { NextAuthConfig } from 'next-auth';
 export const config = {
   adapter: PrismaAdapter(prisma),
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          // Google ile giriş yapanlara otomatik username oluştur
+          username: profile.email.split('@')[0].replace(/[^a-zA-Z0-9_\.]/g, ''),
+        };
+      },
+    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {

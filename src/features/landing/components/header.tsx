@@ -17,12 +17,12 @@ export async function Header() {
         <Link href="/">
           <Logo size={40} />
         </Link>
-        <nav className="hidden items-center space-x-2 md:flex">
+        <nav className="hidden items-center space-x-1 md:flex">
           <Button asChild variant="ghost">
             <Link href="/#features">Features</Link>
           </Button>
           <Button asChild variant="ghost">
-            <Link href="/#pricing">Pricing</Link>
+            <Link href="/#how-it-works">How It Works</Link>
           </Button>
           <ThemeToggle />
           {session?.user ? (

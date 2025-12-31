@@ -43,6 +43,8 @@ type ProfileState = {
   website: string;
   linkedin: string;
   github: string;
+  email: string;
+  phone: string;
 };
 
 type PortfolioState = {
@@ -86,6 +88,8 @@ export const usePortfolioStore = create<PortfolioState & Actions>()(
       website: '',
       linkedin: '',
       github: '',
+      email: '',
+      phone: '',
     },
     experiences: [],
     educations: [],

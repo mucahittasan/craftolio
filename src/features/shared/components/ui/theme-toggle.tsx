@@ -54,8 +54,10 @@ export function ThemeToggle({
       )}
     >
       <div className="relative flex items-center gap-3">
-        <Sun className="h-[1.1rem] w-[1.1rem] flex-shrink-0 rotate-0 scale-100 text-[#ffaa40] transition-all duration-500 group-hover:rotate-180 group-hover:scale-110 dark:-rotate-90 dark:scale-0" />
-        <Moon className="absolute left-0 h-[1.1rem] w-[1.1rem] flex-shrink-0 rotate-90 scale-0 text-[#9c40ff] transition-all duration-500 group-hover:-rotate-180 group-hover:scale-110 dark:rotate-0 dark:scale-100" />
+        {/* Light mode: Sun visible */}
+        <Sun className="h-[1.1rem] w-[1.1rem] flex-shrink-0 text-[#ffaa40] transition-all duration-500 group-hover:rotate-180 group-hover:scale-110 dark:scale-0 dark:opacity-0" />
+        {/* Dark mode: Moon visible */}
+        <Moon className="absolute left-0 h-[1.1rem] w-[1.1rem] flex-shrink-0 scale-0 text-[#9c40ff] opacity-0 transition-all duration-500 dark:scale-100 dark:opacity-100 dark:group-hover:-rotate-12 dark:group-hover:scale-110" />
         {showLabel && !collapsed && (
           <span className="text-sm font-medium">
             {theme === 'dark' ? 'Dark' : 'Light'}
