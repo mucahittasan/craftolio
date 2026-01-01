@@ -60,7 +60,7 @@ export function PortfolioHeader({
         </p>
 
         {/* Meta info row */}
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400 md:justify-start">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-gray-500 dark:text-gray-400 md:justify-start">
           {location && (
             <span className="flex items-center gap-1.5">
               <MapPin className="h-4 w-4" />
