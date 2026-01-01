@@ -46,7 +46,7 @@ export function ProjectCard({
 
         <div className="mt-2 flex-1 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
           <div
-            className="portfolio-page-description line-clamp-3"
+            className="portfolio-page-description"
             dangerouslySetInnerHTML={{ __html: project.description }}
           />
         </div>
