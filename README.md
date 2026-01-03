@@ -1,5 +1,7 @@
 # Craftolio – Portfolio Builder (Next.js 15, React 19, Prisma, NextAuth)
 
+![Craftolio Hero](docs/hero-screenshot-light.png)
+
 ### Overview
 
 Craftolio is a full-stack, production-ready portfolio builder. Users can register, manage profile, experiences, education, projects, and skills, and publish a portfolio page at `/portfolio/[userName]`.
