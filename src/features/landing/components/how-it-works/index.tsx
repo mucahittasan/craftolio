@@ -20,7 +20,7 @@ const STEPS = [
     title: 'Add your content',
     description:
       'Fill in your experience, projects, skills, and education. Our intuitive editor makes it easy to showcase your work.',
-    color: 'blue',
+    color: 'teal',
   },
   {
     number: '03',
@@ -28,7 +28,7 @@ const STEPS = [
     title: 'Share with the world',
     description:
       'Get your unique portfolio URL and share it with recruiters, clients, and peers. Your work, accessible anywhere.',
-    color: 'emerald',
+    color: 'teal',
   },
 ];
 
@@ -46,7 +46,7 @@ export function HowItWorks() {
         {/* Steps */}
         <div className="relative mx-auto max-w-4xl">
           {/* Center line - desktop only */}
-          <div className="absolute left-1/2 top-5 hidden h-[calc(100%-115px)] w-0.5 -translate-x-1/2 bg-gradient-to-b from-[var(--brand-primary)] via-blue-500 to-emerald-500 lg:block" />
+          <div className="absolute left-1/2 top-5 hidden h-[calc(100%-115px)] w-0.5 -translate-x-1/2 bg-gradient-to-b from-[#005461] via-[#0C7779] to-[#3BC1A8] lg:block" />
 
           <div className="space-y-16 lg:space-y-24">
             {STEPS.map((step, index) => {
@@ -67,8 +67,8 @@ export function HowItWorks() {
                             </h3>
                             <div
                               className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${
-                                step.color === 'violet'
-                                  ? 'bg-violet-100 dark:bg-violet-900/30'
+                                step.color === 'teal'
+                                  ? 'bg-[#3BC1A8]/20 dark:bg-[#0C7779]/30'
                                   : step.color === 'blue'
                                     ? 'bg-blue-100 dark:bg-blue-900/30'
                                     : 'bg-emerald-100 dark:bg-emerald-900/30'
@@ -76,8 +76,8 @@ export function HowItWorks() {
                             >
                               <step.icon
                                 className={`h-5 w-5 ${
-                                  step.color === 'violet'
-                                    ? 'text-violet-600 dark:text-violet-400'
+                                  step.color === 'teal'
+                                    ? 'text-[#005461] dark:text-[#3BC1A8]'
                                     : step.color === 'blue'
                                       ? 'text-blue-600 dark:text-blue-400'
                                       : 'text-emerald-600 dark:text-emerald-400'
@@ -98,7 +98,7 @@ export function HowItWorks() {
                       <div
                         className={`z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white shadow-lg ${
                           step.color === 'teal'
-                            ? 'shadow-[var(--brand-primary)]/30 bg-gradient-to-br from-[var(--brand-dark)] to-[var(--brand-secondary)]'
+                            ? 'bg-gradient-to-br from-[#005461] to-[#249E94] shadow-[#0C7779]/30'
                             : step.color === 'blue'
                               ? 'bg-gradient-to-br from-blue-600 to-indigo-600 shadow-blue-500/30'
                               : 'bg-gradient-to-br from-emerald-600 to-teal-600 shadow-emerald-500/30'
@@ -117,7 +117,7 @@ export function HowItWorks() {
                             <div
                               className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${
                                 step.color === 'teal'
-                                  ? 'bg-[var(--brand-accent)]/20 dark:bg-[var(--brand-primary)]/30'
+                                  ? 'bg-[#3BC1A8]/20 dark:bg-[#0C7779]/30'
                                   : step.color === 'blue'
                                     ? 'bg-blue-100 dark:bg-blue-900/30'
                                     : 'bg-emerald-100 dark:bg-emerald-900/30'
@@ -126,7 +126,7 @@ export function HowItWorks() {
                               <step.icon
                                 className={`h-5 w-5 ${
                                   step.color === 'teal'
-                                    ? 'text-[var(--brand-dark)] dark:text-[var(--brand-accent)]'
+                                    ? 'text-[#005461] dark:text-[#3BC1A8]'
                                     : step.color === 'blue'
                                       ? 'text-blue-600 dark:text-blue-400'
                                       : 'text-emerald-600 dark:text-emerald-400'
@@ -152,7 +152,7 @@ export function HowItWorks() {
                     <div
                       className={`relative z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold text-white shadow-lg ${
                         step.color === 'teal'
-                          ? 'bg-gradient-to-br from-[var(--brand-dark)] to-[var(--brand-secondary)]'
+                          ? 'bg-gradient-to-br from-[#005461] to-[#249E94]'
                           : step.color === 'blue'
                             ? 'bg-gradient-to-br from-blue-600 to-indigo-600'
                             : 'bg-gradient-to-br from-emerald-600 to-teal-600'
@@ -168,7 +168,7 @@ export function HowItWorks() {
                         <div
                           className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${
                             step.color === 'teal'
-                              ? 'bg-[var(--brand-accent)]/20 dark:bg-[var(--brand-primary)]/30'
+                              ? 'bg-[#3BC1A8]/20 dark:bg-[#0C7779]/30'
                               : step.color === 'blue'
                                 ? 'bg-blue-100 dark:bg-blue-900/30'
                                 : 'bg-emerald-100 dark:bg-emerald-900/30'
@@ -177,7 +177,7 @@ export function HowItWorks() {
                           <step.icon
                             className={`h-4 w-4 ${
                               step.color === 'teal'
-                                ? 'text-[var(--brand-dark)] dark:text-[var(--brand-accent)]'
+                                ? 'text-[#005461] dark:text-[#3BC1A8]'
                                 : step.color === 'blue'
                                   ? 'text-blue-600 dark:text-blue-400'
                                   : 'text-emerald-600 dark:text-emerald-400'

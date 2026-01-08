@@ -106,7 +106,7 @@ export function SavePortfolioButton({
       onClick={handleSave}
       disabled={isPending}
       variant={variant}
-      className={`gap-2 ${className}`}
+      className={`shadow-[var(--brand-primary)]/25 hover:shadow-[var(--brand-primary)]/40 gap-2 bg-gradient-to-r from-[var(--brand-dark)] to-[var(--brand-secondary)] text-white shadow-lg transition-all hover:opacity-90 hover:shadow-xl ${className}`}
     >
       {isPending ? (
         <>
