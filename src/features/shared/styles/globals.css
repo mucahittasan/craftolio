@@ -25,6 +25,12 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 47.4% 11.2%;
     --radius: 0.5rem;
+
+    /* ─── Brand Colors (Teal/Cyan Palette) ──────────────────────── */
+    --brand-dark: #005461;
+    --brand-primary: #0c7779;
+    --brand-secondary: #249e94;
+    --brand-accent: #3bc1a8;
   }
 
   .dark {
@@ -47,6 +53,12 @@
     --border: 216 34% 17%;
     --input: 216 34% 17%;
     --ring: 263 70% 50%;
+
+    /* ─── Brand Colors (same in dark mode) ──────────────────────── */
+    --brand-dark: #005461;
+    --brand-primary: #0c7779;
+    --brand-secondary: #249e94;
+    --brand-accent: #3bc1a8;
   }
 
   html {

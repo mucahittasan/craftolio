@@ -64,7 +64,7 @@ export function Logo({
             compact ? 'text-[1.05rem]' : 'text-[1.15rem]',
           )}
         >
-          <span className="bg-gradient-to-r from-[#ff7ab6] via-[#8b5cf6] to-[#3b82f6] bg-clip-text text-2xl text-transparent">
+          <span className="bg-gradient-to-r from-[var(--brand-dark)] via-[var(--brand-primary)] to-[var(--brand-accent)] bg-clip-text text-2xl text-transparent">
             Craftol
           </span>
           <span className="text-2xl text-foreground">io</span>
@@ -97,9 +97,9 @@ export function CraftolioGlyph({ className }: { className?: string }) {
           y2="56"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0%" stopColor="#ff7ab6" />
-          <stop offset="55%" stopColor="#8b5cf6" />
-          <stop offset="100%" stopColor="#3b82f6" />
+          <stop offset="0%" stopColor="var(--brand-dark, #005461)" />
+          <stop offset="50%" stopColor="var(--brand-primary, #0C7779)" />
+          <stop offset="100%" stopColor="var(--brand-accent, #3BC1A8)" />
         </linearGradient>
         <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="2" result="blur" />

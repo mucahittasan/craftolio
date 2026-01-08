@@ -12,7 +12,7 @@ const STEPS = [
     title: 'Create your account',
     description:
       'Sign up for free in seconds. No credit card required to get started. Just your name and email.',
-    color: 'violet',
+    color: 'teal',
   },
   {
     number: '02',
@@ -46,7 +46,7 @@ export function HowItWorks() {
         {/* Steps */}
         <div className="relative mx-auto max-w-4xl">
           {/* Center line - desktop only */}
-          <div className="absolute left-1/2 top-5 hidden h-[calc(100%-115px)] w-0.5 -translate-x-1/2 bg-gradient-to-b from-violet-500 via-blue-500 to-emerald-500 lg:block" />
+          <div className="absolute left-1/2 top-5 hidden h-[calc(100%-115px)] w-0.5 -translate-x-1/2 bg-gradient-to-b from-[var(--brand-primary)] via-blue-500 to-emerald-500 lg:block" />
 
           <div className="space-y-16 lg:space-y-24">
             {STEPS.map((step, index) => {
@@ -97,8 +97,8 @@ export function HowItWorks() {
                     <div className="flex justify-center">
                       <div
                         className={`z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white shadow-lg ${
-                          step.color === 'violet'
-                            ? 'bg-gradient-to-br from-violet-600 to-indigo-600 shadow-violet-500/30'
+                          step.color === 'teal'
+                            ? 'shadow-[var(--brand-primary)]/30 bg-gradient-to-br from-[var(--brand-dark)] to-[var(--brand-secondary)]'
                             : step.color === 'blue'
                               ? 'bg-gradient-to-br from-blue-600 to-indigo-600 shadow-blue-500/30'
                               : 'bg-gradient-to-br from-emerald-600 to-teal-600 shadow-emerald-500/30'
@@ -116,8 +116,8 @@ export function HowItWorks() {
                           <div className="flex h-10 items-center gap-3">
                             <div
                               className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${
-                                step.color === 'violet'
-                                  ? 'bg-violet-100 dark:bg-violet-900/30'
+                                step.color === 'teal'
+                                  ? 'bg-[var(--brand-accent)]/20 dark:bg-[var(--brand-primary)]/30'
                                   : step.color === 'blue'
                                     ? 'bg-blue-100 dark:bg-blue-900/30'
                                     : 'bg-emerald-100 dark:bg-emerald-900/30'
@@ -125,8 +125,8 @@ export function HowItWorks() {
                             >
                               <step.icon
                                 className={`h-5 w-5 ${
-                                  step.color === 'violet'
-                                    ? 'text-violet-600 dark:text-violet-400'
+                                  step.color === 'teal'
+                                    ? 'text-[var(--brand-dark)] dark:text-[var(--brand-accent)]'
                                     : step.color === 'blue'
                                       ? 'text-blue-600 dark:text-blue-400'
                                       : 'text-emerald-600 dark:text-emerald-400'
@@ -151,8 +151,8 @@ export function HowItWorks() {
                     {/* Dot - aligned with title */}
                     <div
                       className={`relative z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold text-white shadow-lg ${
-                        step.color === 'violet'
-                          ? 'bg-gradient-to-br from-violet-600 to-indigo-600'
+                        step.color === 'teal'
+                          ? 'bg-gradient-to-br from-[var(--brand-dark)] to-[var(--brand-secondary)]'
                           : step.color === 'blue'
                             ? 'bg-gradient-to-br from-blue-600 to-indigo-600'
                             : 'bg-gradient-to-br from-emerald-600 to-teal-600'
@@ -167,8 +167,8 @@ export function HowItWorks() {
                       <div className="flex h-8 items-center gap-2">
                         <div
                           className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${
-                            step.color === 'violet'
-                              ? 'bg-violet-100 dark:bg-violet-900/30'
+                            step.color === 'teal'
+                              ? 'bg-[var(--brand-accent)]/20 dark:bg-[var(--brand-primary)]/30'
                               : step.color === 'blue'
                                 ? 'bg-blue-100 dark:bg-blue-900/30'
                                 : 'bg-emerald-100 dark:bg-emerald-900/30'
@@ -176,8 +176,8 @@ export function HowItWorks() {
                         >
                           <step.icon
                             className={`h-4 w-4 ${
-                              step.color === 'violet'
-                                ? 'text-violet-600 dark:text-violet-400'
+                              step.color === 'teal'
+                                ? 'text-[var(--brand-dark)] dark:text-[var(--brand-accent)]'
                                 : step.color === 'blue'
                                   ? 'text-blue-600 dark:text-blue-400'
                                   : 'text-emerald-600 dark:text-emerald-400'

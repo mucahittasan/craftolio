@@ -56,7 +56,7 @@ export function PdfShowcase() {
                     <div className="p-5">
                       {/* Header with real info */}
                       <div className="flex items-start gap-3">
-                        <div className="h-12 w-12 flex-shrink-0 rounded-lg bg-gradient-to-br from-violet-400 to-purple-600" />
+                        <div className="h-12 w-12 flex-shrink-0 rounded-lg bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-accent)]" />
                         <div className="min-w-0 flex-1">
                           <h4 className="text-base font-bold text-gray-900 dark:text-white">
                             John Doe

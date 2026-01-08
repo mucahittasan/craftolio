@@ -1,9 +1,9 @@
 <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="craftolio-grad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#ff7ab6"/>
-      <stop offset="55%" stop-color="#8b5cf6"/>
-      <stop offset="100%" stop-color="#3b82f6"/>
+      <stop offset="0%" stop-color="#005461"/>
+      <stop offset="50%" stop-color="#0C7779"/>
+      <stop offset="100%" stop-color="#3BC1A8"/>
     </linearGradient>
     <filter id="craftolio-glow" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="1.5" result="blur"/>
@@ -14,7 +14,7 @@
     </filter>
   </defs>
 
-  <!-- Background for better visibility -->
+  <!-- Background -->
   <rect x="0" y="0" width="64" height="64" rx="14" fill="#0f0f1a"/>
 
   <!-- Outer ring with gradient stroke -->
