@@ -10,14 +10,14 @@ export function EmptyPortfolioState({
   ctaHref = '/dashboard',
 }: EmptyPortfolioStateProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900">
+    <div className="via-[var(--brand-accent)]/10 to-[var(--brand-primary)]/20 dark:to-[var(--brand-dark)]/30 min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 dark:via-slate-800">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-gradient-to-br from-purple-400/20 to-pink-600/20 blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-br from-indigo-400/20 to-blue-600/20 blur-3xl"></div>
+        <div className="from-[var(--brand-secondary)]/20 to-[var(--brand-accent)]/20 absolute -right-40 -top-40 h-80 w-80 rounded-full bg-gradient-to-br blur-3xl"></div>
+        <div className="from-[var(--brand-dark)]/20 to-[var(--brand-primary)]/20 absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-br blur-3xl"></div>
       </div>
       <div className="relative z-10 mx-auto flex max-w-3xl items-center justify-center px-4 py-16 sm:py-24">
         <div className="glass-panel w-full rounded-2xl border border-white/20 p-8 text-center shadow-2xl sm:p-10">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-[#9c40ff] to-[#ffaa40] text-white shadow-lg">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-[var(--brand-dark)] to-[var(--brand-accent)] text-white shadow-lg">
             <Sparkles className="h-6 w-6" />
           </div>
           <h1 className="text-2xl font-bold sm:text-3xl">

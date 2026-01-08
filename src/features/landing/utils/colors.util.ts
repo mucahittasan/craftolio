@@ -1,4 +1,4 @@
-export type ColorVariant = 'violet' | 'blue' | 'emerald' | 'amber';
+export type ColorVariant = 'teal' | 'violet' | 'blue' | 'emerald' | 'amber';
 
 interface ColorClasses {
   bg: string;
@@ -8,6 +8,14 @@ interface ColorClasses {
 }
 
 const COLOR_MAP: Record<ColorVariant, ColorClasses> = {
+  teal: {
+    bg: 'bg-[var(--brand-accent)]/20 dark:bg-[var(--brand-primary)]/30',
+    text: 'text-[var(--brand-dark)] dark:text-[var(--brand-accent)]',
+    badge:
+      'bg-[var(--brand-accent)]/20 text-[var(--brand-dark)] dark:bg-[var(--brand-primary)]/30 dark:text-[var(--brand-accent)]',
+    border:
+      'border-[var(--brand-secondary)]/40 dark:border-[var(--brand-secondary)]/30',
+  },
   violet: {
     bg: 'bg-violet-100 dark:bg-violet-900/30',
     text: 'text-violet-600 dark:text-violet-400',

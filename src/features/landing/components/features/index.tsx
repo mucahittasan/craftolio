@@ -38,7 +38,7 @@ const FEATURES: Feature[] = [
     title: 'Beautiful Design',
     description:
       'Clean, modern templates that make your work shine. No design skills needed.',
-    color: 'violet',
+    color: 'teal',
   },
   {
     icon: FileText,
@@ -90,7 +90,7 @@ const SECTION_TABS: SectionTab[] = [
     icon: Wrench,
     title: 'Skills',
     desc: 'Technologies you master',
-    color: 'violet',
+    color: 'teal',
   },
 ];
 
@@ -317,7 +317,7 @@ function SkillsPreview() {
   return (
     <>
       <div className="mb-4 flex items-center gap-3">
-        <IconBox icon={Wrench} color="violet" />
+        <IconBox icon={Wrench} color="teal" />
         <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
           Skills
         </h4>
@@ -355,7 +355,7 @@ function SectionPreview({ activeSection }: { activeSection: string }) {
 
   return (
     <div className="relative">
-      <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-violet-500/10 via-purple-500/10 to-blue-500/10 blur-2xl" />
+      <div className="from-[var(--brand-dark)]/10 via-[var(--brand-primary)]/10 to-[var(--brand-accent)]/10 absolute -inset-4 rounded-2xl bg-gradient-to-r blur-2xl" />
       <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-900">
         <div className="p-6">{previews[activeSection]}</div>
       </div>
@@ -373,7 +373,7 @@ export function Features() {
       <div className="container mx-auto px-4">
         <SectionHeader
           badge="Features"
-          badgeColor="violet"
+          badgeColor="teal"
           title="Everything you need to showcase your work"
           description="Build a professional portfolio in minutes with powerful features designed for developers, designers, and creators."
         />

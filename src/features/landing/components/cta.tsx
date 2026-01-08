@@ -22,13 +22,13 @@ export function Cta() {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/register"
-              className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-8 font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:shadow-xl hover:shadow-violet-500/30"
+              className="shadow-[var(--brand-primary)]/25 hover:shadow-[var(--brand-primary)]/30 group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[var(--brand-dark)] to-[var(--brand-secondary)] px-8 font-semibold text-white shadow-lg transition-all hover:shadow-xl"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Create Your Portfolio
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-700 to-indigo-700 opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] opacity-0 transition-opacity group-hover:opacity-100" />
             </Link>
             <Link
               href="/portfolio/mucahittasan"

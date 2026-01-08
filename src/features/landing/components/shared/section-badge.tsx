@@ -5,7 +5,7 @@ interface SectionBadgeProps {
   color?: ColorVariant;
 }
 
-export function SectionBadge({ children, color = 'violet' }: SectionBadgeProps) {
+export function SectionBadge({ children, color = 'teal' }: SectionBadgeProps) {
   const colors = getColorClasses(color);
 
   return (

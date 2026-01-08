@@ -43,7 +43,7 @@ export function ViewPortfolioButton({
       className={cn(
         'group relative overflow-hidden',
         variant === 'default' &&
-          'bg-gradient-to-r from-[#9c40ff] to-[#ffaa40] text-white shadow-lg shadow-[#9c40ff]/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#9c40ff]/40',
+          'shadow-[var(--brand-primary)]/25 hover:shadow-[var(--brand-primary)]/40 bg-gradient-to-r from-[var(--brand-dark)] to-[var(--brand-accent)] text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl',
         !showLabel && 'h-10 w-10',
         className,
       )}

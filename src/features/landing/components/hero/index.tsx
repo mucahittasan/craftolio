@@ -20,15 +20,15 @@ export const Hero = () => {
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
-          backgroundImage: `radial-gradient(circle, rgba(139, 92, 246, 0.15) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, rgba(12, 119, 121, 0.15) 1px, transparent 1px)`,
           backgroundSize: '24px 24px',
         }}
       />
 
       {/* Background gradient */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-violet-500/20 via-purple-500/10 to-transparent blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-[400px] w-[400px] translate-x-1/2 translate-y-1/2 rounded-full bg-gradient-to-tl from-blue-500/20 via-cyan-500/10 to-transparent blur-3xl" />
+        <div className="from-[var(--brand-primary)]/20 via-[var(--brand-secondary)]/10 absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br to-transparent blur-3xl" />
+        <div className="from-[var(--brand-accent)]/20 absolute bottom-0 right-0 h-[400px] w-[400px] translate-x-1/2 translate-y-1/2 rounded-full bg-gradient-to-tl via-cyan-500/10 to-transparent blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4">
@@ -36,7 +36,7 @@ export const Hero = () => {
         <div className="mb-8 flex justify-center">
           <Link
             href="#pdf-showcase"
-            className="group inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-4 py-1.5 text-sm font-medium text-violet-700 transition-all hover:border-violet-300 hover:bg-violet-100 dark:border-violet-800 dark:bg-violet-950/50 dark:text-violet-300 dark:hover:border-violet-700 dark:hover:bg-violet-900/50"
+            className="border-[var(--brand-secondary)]/40 bg-[var(--brand-accent)]/10 hover:border-[var(--brand-secondary)]/60 hover:bg-[var(--brand-accent)]/20 dark:border-[var(--brand-secondary)]/30 dark:bg-[var(--brand-primary)]/20 dark:hover:border-[var(--brand-secondary)]/50 dark:hover:bg-[var(--brand-primary)]/30 group inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium text-[var(--brand-dark)] transition-all dark:text-[var(--brand-accent)]"
           >
             <Sparkles className="h-4 w-4" />
             <span>New: Export your portfolio as PDF</span>
@@ -47,7 +47,7 @@ export const Hero = () => {
         {/* Title */}
         <h1 className="mx-auto max-w-4xl text-center text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl lg:text-7xl">
           Build your professional{' '}
-          <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[var(--brand-dark)] via-[var(--brand-primary)] to-[var(--brand-accent)] bg-clip-text text-transparent">
             portfolio
           </span>{' '}
           in minutes
@@ -63,13 +63,13 @@ export const Hero = () => {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href="/register"
-            className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-8 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:shadow-xl hover:shadow-violet-500/30"
+            className="shadow-[var(--brand-primary)]/25 hover:shadow-[var(--brand-primary)]/30 group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[var(--brand-dark)] to-[var(--brand-secondary)] px-8 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl"
           >
             <span className="relative z-10 flex items-center gap-2">
               Get Started Free
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-700 to-indigo-700 opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] opacity-0 transition-opacity group-hover:opacity-100" />
           </Link>
           <Link
             href="#features"
@@ -87,7 +87,7 @@ export const Hero = () => {
         {/* Browser Mockup with Real Portfolio Preview */}
         <div className="relative mx-auto mt-16 max-w-5xl md:mt-20">
           {/* Glow effect */}
-          <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-indigo-500/20 blur-2xl" />
+          <div className="from-[var(--brand-dark)]/20 via-[var(--brand-primary)]/20 to-[var(--brand-accent)]/20 absolute -inset-4 rounded-3xl bg-gradient-to-r blur-2xl" />
 
           {/* Browser frame */}
           <div className="relative overflow-hidden rounded-2xl border border-gray-200/50 bg-white shadow-2xl dark:border-gray-700/50 dark:bg-gray-900">
@@ -110,7 +110,7 @@ export const Hero = () => {
               {/* Header Section */}
               <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-start md:gap-8 md:text-left">
                 {/* Avatar */}
-                <div className="h-24 w-24 flex-shrink-0 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-600 shadow-lg md:h-28 md:w-28" />
+                <div className="h-24 w-24 flex-shrink-0 rounded-2xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-accent)] shadow-lg md:h-28 md:w-28" />
 
                 {/* Info */}
                 <div className="flex-1">
@@ -150,8 +150,8 @@ export const Hero = () => {
               {/* Skills Section */}
               <div className="mt-8">
                 <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/30">
-                    <Wrench className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+                  <div className="bg-[var(--brand-accent)]/20 dark:bg-[var(--brand-primary)]/30 flex h-8 w-8 items-center justify-center rounded-lg">
+                    <Wrench className="h-4 w-4 text-[var(--brand-primary)] dark:text-[var(--brand-accent)]" />
                   </div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">
                     Skills

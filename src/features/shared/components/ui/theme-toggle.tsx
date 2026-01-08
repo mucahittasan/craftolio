@@ -48,7 +48,7 @@ export function ThemeToggle({
       size={collapsed ? 'icon' : 'default'}
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       className={cn(
-        'group relative h-10 overflow-hidden rounded-lg border border-border/40 bg-muted/50 transition-all duration-300 hover:border-[#9c40ff]/30 hover:bg-gradient-to-tr hover:from-[#9c40ff]/10 hover:to-[#ffaa40]/10',
+        'group relative h-10 overflow-hidden rounded-lg border border-border/40 bg-muted/50 transition-all duration-300 hover:border-[#0C7779] hover:bg-[#005461]/15',
         collapsed ? 'w-[47px]' : 'w-full justify-start',
         className,
       )}

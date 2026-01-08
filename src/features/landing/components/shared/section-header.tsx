@@ -10,7 +10,7 @@ interface SectionHeaderProps {
 
 export function SectionHeader({
   badge,
-  badgeColor = 'violet',
+  badgeColor = 'teal',
   title,
   description,
 }: SectionHeaderProps) {
