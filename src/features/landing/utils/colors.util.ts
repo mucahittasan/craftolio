@@ -9,12 +9,11 @@ interface ColorClasses {
 
 const COLOR_MAP: Record<ColorVariant, ColorClasses> = {
   teal: {
-    bg: 'bg-[var(--brand-accent)]/20 dark:bg-[var(--brand-primary)]/30',
-    text: 'text-[var(--brand-dark)] dark:text-[var(--brand-accent)]',
+    bg: 'bg-[#3BC1A8]/20 dark:bg-[#0C7779]/30',
+    text: 'text-[#005461] dark:text-[#3BC1A8]',
     badge:
-      'bg-[var(--brand-accent)]/20 text-[var(--brand-dark)] dark:bg-[var(--brand-primary)]/30 dark:text-[var(--brand-accent)]',
-    border:
-      'border-[var(--brand-secondary)]/40 dark:border-[var(--brand-secondary)]/30',
+      'bg-[#3BC1A8]/20 text-[#005461] dark:bg-[#0C7779]/30 dark:text-[#3BC1A8]',
+    border: 'border-[#249E94]/40 dark:border-[#249E94]/30',
   },
   violet: {
     bg: 'bg-violet-100 dark:bg-violet-900/30',
