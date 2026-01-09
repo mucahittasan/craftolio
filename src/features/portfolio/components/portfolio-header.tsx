@@ -62,7 +62,7 @@ export function PortfolioHeader({
         {/* Meta info row */}
         <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-gray-500 dark:text-gray-400 md:justify-start">
           {location && (
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 text-sm">
               <MapPin className="h-4 w-4" />
               {location}
             </span>
@@ -70,7 +70,7 @@ export function PortfolioHeader({
           {email && (
             <Link
               href={`mailto:${email}`}
-              className="flex items-center gap-1.5 transition-colors hover:text-gray-900 dark:hover:text-white"
+              className="flex items-center gap-1.5 text-sm transition-colors hover:text-gray-900 dark:hover:text-white"
             >
               <Mail className="h-4 w-4" />
               {email}
@@ -79,7 +79,7 @@ export function PortfolioHeader({
           {phone && (
             <Link
               href={`tel:${phone}`}
-              className="flex items-center gap-1.5 transition-colors hover:text-gray-900 dark:hover:text-white"
+              className="flex items-center gap-1.5 text-sm transition-colors hover:text-gray-900 dark:hover:text-white"
             >
               <Phone className="h-4 w-4" />
               {phone}
@@ -89,7 +89,7 @@ export function PortfolioHeader({
 
         {/* Bio */}
         {bio && (
-          <div className="mt-5 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+          <div className="mt-5 max-w-2xl text-base leading-relaxed text-gray-600 dark:text-gray-400">
             <div
               className="portfolio-page-description"
               dangerouslySetInnerHTML={{ __html: bio }}
