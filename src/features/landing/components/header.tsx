@@ -31,8 +31,6 @@ export async function Header() {
                 userName={session.user.name}
                 userUsername={session.user.username}
                 userEmail={session.user.email}
-                size="sm"
-                className="h-9"
               />
               <Button
                 className="bg-foreground text-background hover:bg-foreground/90"
