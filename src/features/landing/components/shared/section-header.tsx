@@ -1,5 +1,14 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import { SectionBadge } from './section-badge';
 import { type ColorVariant } from '../../utils/colors.util';
+import {
+  sectionHeader,
+  sectionBadge,
+  sectionTitle,
+  sectionDescription,
+} from '../../motion';
 
 interface SectionHeaderProps {
   badge: string;
@@ -15,14 +24,28 @@ export function SectionHeader({
   description,
 }: SectionHeaderProps) {
   return (
-    <div className="mx-auto mb-16 max-w-2xl text-center">
-      <SectionBadge color={badgeColor}>{badge}</SectionBadge>
-      <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={sectionHeader}
+      className="mx-auto mb-16 max-w-2xl text-center"
+    >
+      <motion.div variants={sectionBadge}>
+        <SectionBadge color={badgeColor}>{badge}</SectionBadge>
+      </motion.div>
+      <motion.h2
+        variants={sectionTitle}
+        className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl"
+      >
         {title}
-      </h2>
-      <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+      </motion.h2>
+      <motion.p
+        variants={sectionDescription}
+        className="mt-4 text-lg text-gray-600 dark:text-gray-400"
+      >
         {description}
-      </p>
-    </div>
+      </motion.p>
+    </motion.div>
   );
 }

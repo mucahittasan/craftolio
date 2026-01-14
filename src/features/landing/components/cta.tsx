@@ -1,25 +1,41 @@
 'use client';
 
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink } from 'lucide-react';
+import { staggerContainer, fadeInUp, staggerItem } from '../motion';
 
 export function Cta() {
   return (
     <section className="relative py-24">
-      {/* Subtle gradient background */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950" />
 
       <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <motion.h2
+            variants={fadeInUp}
+            className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl"
+          >
             Ready to showcase your work?
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-gray-600 dark:text-gray-400">
+          </motion.h2>
+          <motion.p
+            variants={fadeInUp}
+            className="mx-auto mt-6 max-w-xl text-lg text-gray-600 dark:text-gray-400"
+          >
             Join thousands of professionals who have built their portfolio with
             Craftolio. It takes just a few minutes to get started.
-          </p>
+          </motion.p>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <motion.div
+            variants={staggerItem}
+            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          >
             <Link
               href="/register"
               className="shadow-[var(--brand-primary)]/25 hover:shadow-[var(--brand-primary)]/30 group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[var(--brand-dark)] to-[var(--brand-secondary)] px-8 font-semibold text-white shadow-lg transition-all hover:shadow-xl"
@@ -37,12 +53,15 @@ export function Cta() {
               View Example
               <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
-          </div>
+          </motion.div>
 
-          <p className="mt-6 text-sm text-gray-500 dark:text-gray-500">
+          <motion.p
+            variants={fadeInUp}
+            className="mt-6 text-sm text-gray-500 dark:text-gray-500"
+          >
             Free to use · No credit card required
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );
