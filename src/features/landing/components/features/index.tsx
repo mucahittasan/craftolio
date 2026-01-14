@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   FileText,
   Palette,
@@ -16,6 +17,14 @@ import {
 } from 'lucide-react';
 import { SectionHeader, IconBox } from '../shared';
 import { type ColorVariant, getColorClasses } from '../../utils/colors.util';
+import {
+  staggerContainer,
+  staggerItem,
+  fadeInUp,
+  slideInLeft,
+  slideInRight,
+  scaleIn,
+} from '../../motion';
 
 interface Feature {
   icon: LucideIcon;
@@ -94,11 +103,15 @@ const SECTION_TABS: SectionTab[] = [
   },
 ];
 
-function FeatureCard({ feature }: { feature: Feature }) {
+function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
   const colors = getColorClasses(feature.color);
 
   return (
-    <div className="group rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-gray-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700">
+    <motion.div
+      variants={staggerItem}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="group rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-gray-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700"
+    >
       <div
         className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${colors.bg}`}
       >
@@ -110,7 +123,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
       <p className="text-sm text-gray-600 dark:text-gray-400">
         {feature.description}
       </p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -354,12 +367,24 @@ function SectionPreview({ activeSection }: { activeSection: string }) {
   };
 
   return (
-    <div className="relative">
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={scaleIn}
+      className="relative"
+    >
       <div className="from-[var(--brand-dark)]/10 via-[var(--brand-primary)]/10 to-[var(--brand-accent)]/10 absolute -inset-4 rounded-2xl bg-gradient-to-r blur-2xl" />
-      <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-900">
+      <motion.div
+        key={activeSection}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-900"
+      >
         <div className="p-6">{previews[activeSection]}</div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -378,18 +403,26 @@ export function Features() {
           description="Build a professional portfolio in minutes with powerful features designed for developers, designers, and creators."
         />
 
-        {/* Feature Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
+        >
           {FEATURES.map((feature, index) => (
-            <FeatureCard key={index} feature={feature} />
+            <FeatureCard key={index} feature={feature} index={index} />
           ))}
-        </div>
+        </motion.div>
 
-        {/* Interactive Section Preview */}
         <div className="mt-20">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            {/* Left: Tab buttons */}
-            <div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={slideInLeft}
+            >
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
                 Organized sections for every part of your career
               </h3>
@@ -398,19 +431,25 @@ export function Features() {
                 dedicated sections that are easy to fill and beautiful to view.
               </p>
 
-              <div className="mt-8 space-y-2">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={staggerContainer}
+                className="mt-8 space-y-2"
+              >
                 {SECTION_TABS.map((tab) => (
-                  <SectionTabButton
-                    key={tab.id}
-                    tab={tab}
-                    isActive={activeSection === tab.id}
-                    onClick={() => setActiveSection(tab.id)}
-                  />
+                  <motion.div key={tab.id} variants={staggerItem}>
+                    <SectionTabButton
+                      tab={tab}
+                      isActive={activeSection === tab.id}
+                      onClick={() => setActiveSection(tab.id)}
+                    />
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            {/* Right: Dynamic preview */}
             <SectionPreview activeSection={activeSection} />
           </div>
         </div>
