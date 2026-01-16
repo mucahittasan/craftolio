@@ -140,6 +140,7 @@ export function Sidebar({ user }: SidebarProps) {
                 <ThemeToggle
                   showLabel={isExpanded || isBreakpoint}
                   collapsed={!isExpanded && !isBreakpoint}
+                  className="w-full"
                 />
               </SidebarTooltip>
 

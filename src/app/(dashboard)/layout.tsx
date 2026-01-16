@@ -21,7 +21,7 @@ export default async function DashboardLayout({
     <div className="relative flex min-h-screen bg-background">
       <Sidebar user={session.user} />
       <MobileToggle />
-      <div className="absolute bottom-[0%] right-[10%] z-10 h-[250px] w-[250px] bg-gradient-to-tr from-[#9c40ff] to-[#ffaa40] blur-[220px]" />
+      <div className="absolute bottom-[0%] right-[10%] z-10 h-[250px] w-[250px] bg-gradient-to-tr from-[var(--brand-dark)] to-[var(--brand-accent)] blur-[220px]" />
       <main className="relative flex-1 p-4 sm:p-8">
         <div className="pointer-events-none absolute inset-0 z-0 h-full w-full bg-background bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-background dark:bg-[radial-gradient(#ffffff33_1px,transparent_1px)]" />
         <div className="relative z-10">
