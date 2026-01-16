@@ -31,7 +31,7 @@ export function ThemeToggle({
         size={collapsed ? 'icon' : 'default'}
         className={cn(
           'relative h-9 overflow-hidden rounded-lg border border-border/40 bg-muted/50',
-          collapsed ? 'w-9' : 'w-full justify-start',
+          collapsed ? 'justify-center' : 'w-full justify-start',
           className,
         )}
       >
@@ -49,7 +49,7 @@ export function ThemeToggle({
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       className={cn(
         'group relative h-9 overflow-hidden rounded-lg border border-border/40 bg-muted/50 transition-all duration-300 hover:border-[#0C7779] hover:bg-[#005461]/15',
-        collapsed ? 'w-9' : 'w-full justify-start',
+        collapsed ? 'justify-center' : 'w-full justify-start',
         className,
       )}
     >
