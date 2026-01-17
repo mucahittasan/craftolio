@@ -27,6 +27,7 @@ import {
 import '@/features/portfolio/style/portfolio.css';
 import { EmptyPortfolioState } from '@/features/portfolio/components/empty-portfolio-state';
 import type { Metadata } from 'next';
+import { CraftolioGlyph } from '@/features/shared/components/logo';
 
 type Props = {
   params: Promise<{
@@ -89,8 +90,14 @@ export default async function PortfolioPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <div className="mx-auto max-w-4xl px-4 py-8 md:px-6 md:py-16">
+    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      {/* Decorative background elements */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="from-[var(--brand-primary)]/20 to-[var(--brand-accent)]/20 absolute -right-40 -top-40 h-80 w-80 rounded-full bg-gradient-to-br blur-3xl" />
+        <div className="from-[var(--brand-dark)]/20 to-[var(--brand-secondary)]/20 absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-br blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl px-4 py-8 md:px-6 md:py-16">
         {/* Actions menu */}
         <div className="fixed right-4 top-4 z-20 md:right-6 md:top-6">
           <Popover>
@@ -98,7 +105,7 @@ export default async function PortfolioPage({ params }: Props) {
               <Button
                 size="icon"
                 variant="ghost"
-                className="h-10 w-10 rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                className="hover:border-[var(--brand-primary)]/50 dark:hover:border-[var(--brand-accent)]/50 h-10 w-10 rounded-full border border-gray-200/50 bg-white/80 text-gray-700 shadow-lg backdrop-blur-sm transition-all hover:bg-white hover:shadow-xl dark:border-gray-700/50 dark:bg-gray-900/80 dark:text-gray-300 dark:hover:bg-gray-800"
               >
                 <MoreVertical className="h-5 w-5" />
                 <span className="sr-only">Open actions</span>
@@ -145,8 +152,8 @@ export default async function PortfolioPage({ params }: Props) {
         {skills && skills.length > 0 && (
           <section className="mb-14">
             <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/30">
-                <Wrench className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+              <div className="shadow-[var(--brand-primary)]/25 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-accent)] shadow-lg">
+                <Wrench className="h-5 w-5 text-white" />
               </div>
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Skills
@@ -160,8 +167,8 @@ export default async function PortfolioPage({ params }: Props) {
         {experiences && experiences.length > 0 && (
           <section className="mb-14">
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
-                <Briefcase className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="shadow-[var(--brand-dark)]/25 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-dark)] to-[var(--brand-primary)] shadow-lg">
+                <Briefcase className="h-5 w-5 text-white" />
               </div>
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Experience
@@ -175,8 +182,8 @@ export default async function PortfolioPage({ params }: Props) {
         {educations && educations.length > 0 && (
           <section className="mb-14">
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30">
-                <GraduationCap className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              <div className="shadow-[var(--brand-secondary)]/25 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-secondary)] to-[var(--brand-accent)] shadow-lg">
+                <GraduationCap className="h-5 w-5 text-white" />
               </div>
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Education
@@ -190,8 +197,8 @@ export default async function PortfolioPage({ params }: Props) {
         {projects && projects.length > 0 && (
           <section className="mb-16">
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/30">
-                <FolderKanban className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              <div className="shadow-[var(--brand-primary)]/25 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] shadow-lg">
+                <FolderKanban className="h-5 w-5 text-white" />
               </div>
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Projects
@@ -206,16 +213,19 @@ export default async function PortfolioPage({ params }: Props) {
         )}
 
         {/* Footer */}
-        <footer className="border-t border-gray-200 pt-8 dark:border-gray-800">
-          <p className="text-center text-sm text-gray-400 dark:text-gray-500">
-            Built with{' '}
-            <Link
-              href="/"
-              className="font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-            >
-              Craftolio
-            </Link>
-          </p>
+        <footer className="border-t border-gray-200/50 pt-8 dark:border-gray-800/50">
+          <Link
+            href="/"
+            className="group flex items-center justify-center gap-2 text-sm text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+          >
+            <span>Built with</span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <CraftolioGlyph className="h-5 w-5 transition-transform group-hover:scale-110" />
+              <span className="bg-gradient-to-r from-[var(--brand-dark)] via-[var(--brand-primary)] to-[var(--brand-accent)] bg-clip-text text-transparent">
+                Craftolio
+              </span>
+            </span>
+          </Link>
         </footer>
       </div>
     </div>

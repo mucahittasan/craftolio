@@ -12,13 +12,13 @@ export function ExperienceTimeline({
       {experiences.map((exp) => (
         <div
           key={exp.id}
-          className="group rounded-xl border border-gray-100 bg-white p-5 transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+          className="hover:border-[var(--brand-primary)]/20 dark:hover:border-[var(--brand-accent)]/20 group rounded-xl border border-gray-100/50 bg-white/80 p-5 shadow-sm backdrop-blur-sm transition-all hover:shadow-md dark:border-gray-800/50 dark:bg-gray-900/80"
         >
           {/* Header */}
           <div className="flex items-start gap-3 sm:gap-4">
             {/* Company icon */}
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 sm:h-11 sm:w-11 dark:bg-gray-800">
-              <Building2 className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <div className="from-[var(--brand-dark)]/10 to-[var(--brand-primary)]/10 dark:from-[var(--brand-primary)]/20 dark:to-[var(--brand-accent)]/20 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br sm:h-11 sm:w-11">
+              <Building2 className="h-5 w-5 text-[var(--brand-primary)] dark:text-[var(--brand-accent)]" />
             </div>
 
             <div className="min-w-0 flex-1">
@@ -30,11 +30,11 @@ export function ExperienceTimeline({
                 {/* Date badge */}
                 <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
                   {!exp.endDate && (
-                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                    <span className="bg-[var(--brand-accent)]/10 dark:bg-[var(--brand-accent)]/20 rounded-full px-2 py-0.5 text-xs font-medium text-[var(--brand-dark)] dark:text-[var(--brand-accent)]">
                       Current
                     </span>
                   )}
-                  <span className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 sm:text-sm">
                     {format(new Date(exp.startDate!), 'MMM yyyy')} –{' '}
                     {exp.endDate
                       ? format(new Date(exp.endDate), 'MMM yyyy')

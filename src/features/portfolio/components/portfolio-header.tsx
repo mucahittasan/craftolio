@@ -39,23 +39,24 @@ export function PortfolioHeader({
     <header className="flex flex-col items-center space-y-6 text-center md:flex-row md:items-start md:space-x-8 md:space-y-0 md:text-left">
       {/* Avatar */}
       <div className="relative h-28 w-28 flex-shrink-0 md:h-32 md:w-32">
+        <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-[var(--brand-dark)] via-[var(--brand-primary)] to-[var(--brand-accent)] opacity-75 blur-sm" />
         <Image
           src={
             avatarUrl ||
-            `https://ui-avatars.com/api/?name=${name}&background=e5e7eb&color=374151&size=200&bold=true`
+            `https://ui-avatars.com/api/?name=${name}&background=0c7779&color=ffffff&size=200&bold=true`
           }
           alt={name || 'User Avatar'}
-          className="rounded-2xl border-2 border-gray-100 object-cover shadow-lg dark:border-gray-800"
+          className="relative rounded-2xl border-2 border-white object-cover shadow-xl dark:border-gray-800"
           fill
         />
       </div>
 
       {/* Content */}
       <div className="flex-1">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white md:text-4xl">
+        <h1 className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-3xl font-bold tracking-tight text-transparent dark:from-white dark:via-gray-100 dark:to-white md:text-4xl">
           {name}
         </h1>
-        <p className="mt-1 text-lg font-medium text-gray-600 dark:text-gray-400 md:text-xl">
+        <p className="mt-1 text-lg font-medium text-[var(--brand-primary)] dark:text-[var(--brand-accent)] md:text-xl">
           {title}
         </p>
 
@@ -105,7 +106,7 @@ export function PortfolioHeader({
                 href={linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 transition-colors hover:border-blue-500 hover:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-blue-500 dark:hover:text-blue-400"
+                className="hover:border-[var(--brand-primary)]/50 hover:bg-[var(--brand-primary)]/10 dark:hover:border-[var(--brand-accent)]/50 dark:hover:bg-[var(--brand-accent)]/10 flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200/50 bg-white/80 text-gray-600 backdrop-blur-sm transition-all hover:text-[var(--brand-primary)] dark:border-gray-700/50 dark:bg-gray-800/80 dark:text-gray-400 dark:hover:text-[var(--brand-accent)]"
                 title="LinkedIn"
               >
                 <Linkedin className="h-4 w-4" />
@@ -116,7 +117,7 @@ export function PortfolioHeader({
                 href={github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 transition-colors hover:border-gray-900 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-white dark:hover:text-white"
+                className="hover:border-[var(--brand-dark)]/50 hover:bg-[var(--brand-dark)]/10 dark:hover:border-[var(--brand-secondary)]/50 dark:hover:bg-[var(--brand-secondary)]/10 flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200/50 bg-white/80 text-gray-600 backdrop-blur-sm transition-all hover:text-[var(--brand-dark)] dark:border-gray-700/50 dark:bg-gray-800/80 dark:text-gray-400 dark:hover:text-[var(--brand-secondary)]"
                 title="GitHub"
               >
                 <Github className="h-4 w-4" />
@@ -127,7 +128,7 @@ export function PortfolioHeader({
                 href={website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 transition-colors hover:border-purple-500 hover:text-purple-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-purple-500 dark:hover:text-purple-400"
+                className="hover:border-[var(--brand-secondary)]/50 hover:bg-[var(--brand-secondary)]/10 dark:hover:border-[var(--brand-accent)]/50 dark:hover:bg-[var(--brand-accent)]/10 flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200/50 bg-white/80 text-gray-600 backdrop-blur-sm transition-all hover:text-[var(--brand-secondary)] dark:border-gray-700/50 dark:bg-gray-800/80 dark:text-gray-400 dark:hover:text-[var(--brand-accent)]"
                 title="Website"
               >
                 <ExternalLink className="h-4 w-4" />
