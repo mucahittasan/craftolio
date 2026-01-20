@@ -40,7 +40,7 @@ export function PortfolioHeader({
       {/* Top row: Avatar + Name/Title/Meta */}
       <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-start md:text-left">
         <div className="mb-10 flex-1 md:text-left">
-          <h1 className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-3xl font-bold tracking-tight text-transparent dark:from-white dark:via-gray-100 dark:to-white md:text-4xl">
+          <h1 className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-3xl font-bold tracking-tight text-transparent dark:from-white dark:via-gray-100 dark:to-white md:text-6xl">
             {name}
           </h1>
           <p className="mt-1 text-lg font-medium text-[var(--brand-primary)] dark:text-[var(--brand-accent)] md:text-xl">
